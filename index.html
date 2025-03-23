@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Memory Game - Fun Brain Training Game | ilovethisgame.cc</title>
     <meta name="description" content="Play our engaging Memory Game online. Test and improve your memory skills with this classic card-matching game. Perfect for all ages!">
     <link rel="canonical" href="https://ilovethisgame.cc" />
@@ -11,83 +11,63 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f5f5f7;
+            background-color: #121212;
+            color: #ffffff;
         }
         .game-container {
-            aspect-ratio: 16/9;
-            max-width: 100%;
-            height: auto;
+            width: 100%;
+            height: 100vh;
+            max-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        @media (max-width: 640px) {
+            .game-container {
+                height: 100vh;
+                width: 100vw;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 10;
+            }
+            .game-wrapper {
+                padding: 0;
+                margin: 0;
+                height: 100vh;
+            }
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <header class="bg-white shadow-sm">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <header class="bg-[#1e1e1e] shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gray-900">Memory Game</h1>
-                <a href="https://ilovethisgame.cc" class="text-blue-600 hover:text-blue-800">Home</a>
+                <h1 class="text-xl font-bold text-white">Memory Game</h1>
+                <a href="https://ilovethisgame.cc" class="text-blue-400 hover:text-blue-300 text-sm">Home</a>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <section class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Challenge Your Memory Skills</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Test your cognitive abilities with our engaging Memory Game. Match pairs of cards while improving your concentration and pattern recognition skills.
-            </p>
-        </section>
-
-        <section class="mb-12">
-            <div class="bg-white rounded-lg shadow-lg p-4">
-                <div class="game-container mx-auto">
-                    <iframe 
-                        src="https://juandagarcia.github.io/MemoryGame/" 
-                        class="w-full h-full border-0 rounded-lg"
-                        title="Memory Game"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                </div>
+    <main class="max-w-7xl mx-auto px-4 py-4">
+        <section class="game-wrapper mb-4">
+            <div class="game-container">
+                <iframe 
+                    src="https://juandagarcia.github.io/MemoryGame/" 
+                    class="w-full h-full border-0"
+                    title="Memory Game"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
             </div>
-        </section>
-
-        <section class="grid md:grid-cols-2 gap-8 mb-12">
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">About the Game</h2>
-                <p class="text-gray-600">
-                    Our Memory Game is a classic card-matching puzzle that challenges players to find pairs of identical cards. With increasing difficulty levels and a clean, intuitive interface, it's perfect for both casual players and those looking to enhance their memory skills.
-                </p>
-            </div>
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">How to Play</h2>
-                <ul class="list-disc list-inside text-gray-600 space-y-2">
-                    <li>Click on cards to reveal their symbols</li>
-                    <li>Try to match pairs of identical cards</li>
-                    <li>Remember card positions to make successful matches</li>
-                    <li>Complete all matches to win the game</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">Benefits of Playing Memory Games</h2>
-            <ul class="list-disc list-inside text-gray-600 space-y-2">
-                <li>Improves short-term memory</li>
-                <li>Enhances concentration and focus</li>
-                <li>Develops pattern recognition skills</li>
-                <li>Provides mental stimulation</li>
-                <li>Perfect for all age groups</li>
-            </ul>
         </section>
     </main>
 
-    <footer class="bg-white border-t mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <p class="text-center text-gray-600">
-                © 2024 Memory Game. All rights reserved.
+    <footer class="bg-[#1e1e1e] border-t border-gray-800 mt-4">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <p class="text-center text-sm text-gray-400">
+                © 2024 Memory Game
             </p>
         </div>
     </footer>
 </body>
-</html> 
+</html>

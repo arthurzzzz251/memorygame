@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=31536000">
     <title>Memory Game - Fun Brain Training Game | ilovethisgame.cc</title>
     <meta name="description" content="Play our engaging Memory Game online. Test and improve your memory skills with this classic card-matching game. Perfect for all ages!">
     <link rel="canonical" href="https://ilovethisgame.cc" />
@@ -20,6 +21,15 @@
             max-height: 100vh;
             position: relative;
             overflow: hidden;
+        }
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
         }
         @media (max-width: 640px) {
             .game-container {
@@ -51,12 +61,18 @@
     <main class="max-w-7xl mx-auto px-4 py-4">
         <section class="game-wrapper mb-4">
             <div class="game-container">
+                <div class="loading-overlay" id="loading">
+                    <div class="text-white text-xl">loading...</div>
+                </div>
                 <iframe 
+                    loading="lazy"
+                    importance="high"
                     src="https://juandagarcia.github.io/MemoryGame/" 
                     class="w-full h-full border-0"
                     title="Memory Game"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
+                    allowfullscreen
+                    onload="document.getElementById('loading').style.display='none'">
                 </iframe>
             </div>
         </section>

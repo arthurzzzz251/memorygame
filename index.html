@@ -2,88 +2,370 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Cache-Control" content="max-age=31536000">
-    <title>Memory Game - Fun Brain Training Game | ilovethisgame.cc</title>
-    <meta name="description" content="Play our engaging Memory Game online. Test and improve your memory skills with this classic card-matching game. Perfect for all ages!">
-    <link rel="canonical" href="https://ilovethisgame.cc" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone - Free Online Games</title>
+    <meta name="description" content="Play free online games including Sudoku, Memory, Card Games, Mahjong, and more. No downloads required, play directly in your browser.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        :root {
+            /* 更新颜色变量 */
+            --primary-color: #ff4655;
+            --secondary-color: #0f1923;
+            --background-color: #111111;
+            --dark-background: #000000;
+            --text-color: #ffffff;
+            --light-text: #fff;
+            --card-background: #222222;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --accent-color: #ff4655;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
-        .game-container {
-            width: 100%;
-            height: 100vh;
-            max-height: 100vh;
-            position: relative;
+        
+        /* 游戏卡片样式优化 */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .game-card {
+            border-radius: 12px;
             overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            background-color: var(--card-background);
         }
-        .loading-overlay {
+        
+        .game-thumb {
+            height: 135px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .game-info {
+            padding: 10px;
+        }
+        
+        .game-title {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--light-text);
+        }
+        
+        .game-description {
+            display: none;
+        }
+        
+        .play-now {
             position: absolute;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 2;
         }
-        @media (max-width: 640px) {
-            .game-container {
-                height: 100vh;
-                width: 100vw;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 10;
-            }
-            .game-wrapper {
-                padding: 0;
-                margin: 0;
-                height: 100vh;
-            }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-card:hover .play-now {
+            opacity: 1;
+        }
+        
+        .game-card:hover .game-thumb::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 简化的英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), #9900ff);
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0;
+        }
+        
+        .hero h1 {
+            color: var(--light-text);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        /* 段落标题 */
+        .section-title {
+            color: var(--light-text);
+            font-size: 1.8rem;
+            margin: 20px 0;
+        }
+        
+        /* 隐藏一些不必要的元素 */
+        .section-title::after {
+            display: none;
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <header class="bg-[#1e1e1e] shadow-lg">
-        <nav class="max-w-7xl mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-bold text-white">Memory Game</h1>
-                <a href="https://ilovethisgame.cc" class="text-blue-400 hover:text-blue-300 text-sm">Home</a>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">GameZone</a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories/sudoku.html">Sudoku</a></li>
+                    <li><a href="categories/memory.html">Memory</a></li>
+                    <li><a href="categories/cards.html">Card Games</a></li>
+                    <li><a href="categories/mahjong.html">Mahjong</a></li>
+                    <li><a href="categories/fortune.html">Fortune Telling</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-box">
+                <form class="search-form">
+                    <input type="text" placeholder="Search games...">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
-        </nav>
+        </div>
     </header>
-
-    <main class="max-w-7xl mx-auto px-4 py-4">
-        <section class="game-wrapper mb-4">
-            <div class="game-container">
-                <div class="loading-overlay" id="loading">
-                    <div class="text-white text-xl">loading...</div>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero区域 -->
+            <section class="hero">
+                <h1>Free Online Games</h1>
+                <a href="#games" class="btn">PLAY NOW</a>
+            </section>
+            
+            <!-- 热门游戏 -->
+            <section id="games" class="featured-games">
+                <h2 class="section-title">Popular Games</h2>
+                <div class="game-grid">
+                    <!-- Hello Kitty游戏 -->
+                    <div class="game-card" data-tags="memory,kids,activity">
+                        <div class="game-thumb" style="background-image: url('assets/images/hello-kitty-activity.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Hello Kitty - Activity Book</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/hello-kitty-activity.html', 'Hello Kitty - Activity Book')">Play</a>
+                    </div>
+                    
+                    <!-- 新添加的CrazyGames数独游戏 -->
+                    <div class="game-card" data-tags="sudoku,logic">
+                        <div class="game-thumb" style="background-image: url('assets/images/sudoku-crazygames.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Sudoku Online</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/sudoku/crazygames-sudoku.html', 'Sudoku Online')">Play</a>
+                    </div>
+                    
+                    <!-- 数独游戏 -->
+                    <div class="game-card" data-tags="sudoku,logic">
+                        <div class="game-thumb" style="background-image: url('assets/images/sudoku-classic.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Classic Sudoku</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/sudoku/classic-game.html', 'Classic Sudoku')">Play</a>
+                    </div>
+                    
+                    <!-- 2048游戏 -->
+                    <div class="game-card" data-tags="puzzle,logic">
+                        <div class="game-thumb" style="background-image: url('assets/images/2048.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">2048</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/puzzle/2048.html', '2048')">Play</a>
+                    </div>
+                    
+                    <!-- 记忆翻牌游戏 -->
+                    <div class="game-card" data-tags="memory,kids">
+                        <div class="game-thumb" style="background-image: url('assets/images/memory-card.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Memory Card</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/flip-card.html', 'Memory Card')">Play</a>
+                    </div>
+                    
+                    <!-- 纸牌接龙游戏 -->
+                    <div class="game-card" data-tags="cards,classic">
+                        <div class="game-thumb" style="background-image: url('assets/images/solitaire.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Solitaire</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/card/solitaire.html', 'Solitaire')">Play</a>
+                    </div>
+                    
+                    <!-- 麻将连连看游戏 -->
+                    <div class="game-card" data-tags="mahjong,connect">
+                        <div class="game-thumb" style="background-image: url('assets/images/mahjong-connect.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Mahjong Connect</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/mahjong/connect.html', 'Mahjong Connect')">Play</a>
+                    </div>
+                    
+                    <!-- 塔罗占卜游戏 -->
+                    <div class="game-card" data-tags="fortune,tarot">
+                        <div class="game-thumb" style="background-image: url('assets/images/tarot.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Tarot Reading</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/fortune/tarot.html', 'Tarot Reading')">Play</a>
+                    </div>
+                    
+                    <!-- 记忆游戏 -->
+                    <div class="game-card" data-tags="memory,animals">
+                        <div class="game-thumb" style="background-image: url('assets/images/memory-animals.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Animal Memory</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/animals.html', 'Animal Memory')">Play</a>
+                    </div>
+                    
+                    <!-- 数独变种 -->
+                    <div class="game-card" data-tags="sudoku,killer">
+                        <div class="game-thumb" style="background-image: url('assets/images/sudoku-killer.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Killer Sudoku</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/sudoku/killer.html', 'Killer Sudoku')">Play</a>
+                    </div>
+                    
+                    <!-- 纸牌游戏 -->
+                    <div class="game-card" data-tags="cards,spider">
+                        <div class="game-thumb" style="background-image: url('assets/images/spider-solitaire.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Spider Solitaire</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/cards/spider.html', 'Spider Solitaire')">Play</a>
+                    </div>
+                    
+                    <!-- 记忆游戏 -->
+                    <div class="game-card" data-tags="memory,numbers">
+                        <div class="game-thumb" style="background-image: url('assets/images/memory-numbers.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Number Memory</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/numbers.html', 'Number Memory')">Play</a>
+                    </div>
                 </div>
-                <iframe 
-                    loading="lazy"
-                    importance="high"
-                    src="https://juandagarcia.github.io/MemoryGame/" 
-                    class="w-full h-full border-0"
-                    title="Memory Game"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    onload="document.getElementById('loading').style.display='none'">
-                </iframe>
-            </div>
-        </section>
+            </section>
+            
+            <!-- 新游戏 -->
+            <section class="new-games">
+                <h2 class="section-title">New Games</h2>
+                <div class="game-grid">
+                    <!-- 麻将游戏 -->
+                    <div class="game-card" data-tags="mahjong,dynasty">
+                        <div class="game-thumb" style="background-image: url('assets/images/mahjong-dynasty.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Dynasty Mahjong</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/mahjong/dynasty.html', 'Mahjong Dynasty')">Play</a>
+                    </div>
+                    
+                    <!-- 占卜游戏 -->
+                    <div class="game-card" data-tags="fortune,crystal">
+                        <div class="game-thumb" style="background-image: url('assets/images/crystal-ball.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Crystal Ball</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/fortune/crystal-ball.html', 'Crystal Ball')">Play</a>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
-
-    <footer class="bg-[#1e1e1e] border-t border-gray-800 mt-4">
-        <div class="max-w-7xl mx-auto px-4 py-4">
-            <p class="text-center text-sm text-gray-400">
-                © 2024 Memory Game
-            </p>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">About GameZone</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="categories/sudoku.html">Sudoku</a></li>
+                    <li><a href="categories/memory.html">Memory</a></li>
+                    <li><a href="categories/cards.html">Card Games</a></li>
+                    <li><a href="categories/mahjong.html">Mahjong</a></li>
+                    <li><a href="categories/fortune.html">Fortune Telling</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                &copy; 2023 GameZone. All Rights Reserved.
+            </div>
         </div>
     </footer>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
 </body>
-</html>
+</html> 

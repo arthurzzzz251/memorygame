@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Kitty - Activity Book - GameZone</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        
+        .game-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-header {
+            padding: 10px 15px;
+            background-color: #ff69b4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .game-info {
+            font-size: 0.85rem;
+            color: #fff;
+        }
+        
+        .back-button {
+            background-color: #fff;
+            color: #ff69b4;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .back-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .game-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: calc(100% - 50px);
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #ff69b4;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div>
+                <div class="game-title">Hello Kitty - Activity Book</div>
+                <div class="game-info">By Webcore Games</div>
+            </div>
+            <button class="back-button" onclick="window.history.back()">Back to Games</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Loading Game...</div>
+        </div>
+        
+        <iframe id="game-frame" class="game-frame" src="https://www.crazygames.com/embed/hello-kitty---activity-book" frameborder="0" allow="fullscreen" allowfullscreen onload="hideLoading()"></iframe>
+    </div>
+    
+    <script>
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        // 检测iframe加载完成
+        document.getElementById('game-frame').addEventListener('load', hideLoading);
+        
+        // 备用方案：无论如何5秒后隐藏加载提示
+        setTimeout(hideLoading, 5000);
+    </script>
+</body>
+</html> 

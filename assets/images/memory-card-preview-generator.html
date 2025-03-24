@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记忆翻牌预览图生成器</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .preview-container {
+            width: 360px;
+            height: 270px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .card-grid {
+            margin: 50px auto 0;
+            width: 300px;
+            height: 200px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+        
+        .card {
+            background-color: #2980b9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .card.flipped {
+            background-color: #e74c3c;
+            transform: rotateY(180deg);
+        }
+        
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="game-title">记忆翻牌</div>
+        <div class="card-grid" id="card-grid"></div>
+    </div>
+    
+    <div class="instructions">
+        <h3>使用说明：</h3>
+        <p>1. 此页面创建了一个记忆翻牌游戏的预览图</p>
+        <p>2. 使用浏览器截图功能截取预览图</p>
+        <p>3. 将截图保存为 "记忆翻牌.jpg"</p>
+        <p>4. 将图片保存到 assets/images/ 目录中</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('card-grid');
+            
+            // 创建12张卡片
+            for (let i = 0; i < 12; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-index', i);
+                
+                // 随机翻转一些卡片
+                if (i === 2 || i === 7 || i === 9) {
+                    card.classList.add('flipped');
+                    card.textContent = '★';
+                }
+                
+                grid.appendChild(card);
+            }
+        });
+    </script>
+</body>
+</html> 

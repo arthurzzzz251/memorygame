@@ -1,0 +1,205 @@
+/* 
+Responsive styles for Game Entertainment Website
+Ensuring proper display across different device sizes
+*/
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .category-items {
+        justify-content: space-around;
+    }
+    
+    .category-card {
+        width: 160px;
+    }
+    
+    .footer-section {
+        min-width: 150px;
+    }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    .hero {
+        padding: 3rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .category-card {
+        width: 140px;
+    }
+    
+    .category-icon {
+        height: 80px;
+    }
+    
+    .category-icon i {
+        font-size: 2rem;
+    }
+    
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+    }
+    
+    .footer-section {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .game-title-big {
+        font-size: 1.8rem;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .container {
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    .hero {
+        padding: 2rem 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-title::after {
+        width: 80px;
+    }
+    
+    .category-items {
+        gap: 1rem;
+    }
+    
+    .category-card {
+        width: 120px;
+    }
+    
+    .category-icon {
+        height: 70px;
+    }
+    
+    .category-name {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+    
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+    
+    .game-thumb {
+        height: 120px;
+    }
+    
+    .game-info {
+        padding: 0.8rem;
+    }
+    
+    .game-title {
+        font-size: 1rem;
+    }
+    
+    .game-description {
+        font-size: 0.8rem;
+    }
+    
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+    }
+    
+    .play-now {
+        padding: 0.4rem;
+        font-size: 0.9rem;
+    }
+    
+    .game-title-big {
+        font-size: 1.5rem;
+    }
+    
+    .game-category {
+        font-size: 0.8rem;
+    }
+    
+    .game-description-long {
+        font-size: 0.9rem;
+    }
+}
+
+/* For very small devices */
+@media (max-width: 359.98px) {
+    .category-card {
+        width: 100px;
+    }
+    
+    .category-icon {
+        height: 60px;
+    }
+    
+    .category-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .category-name {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+    
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-thumb {
+        height: 140px;
+    }
+} 

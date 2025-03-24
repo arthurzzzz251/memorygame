@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Preview Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .instructions h2 {
+            margin-top: 0;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .preview-item {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .preview-header {
+            height: 135px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+        }
+        .preview-title {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .sudoku {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        .puzzle {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        .memory {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        .card {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Preview Image Generator</h1>
+    
+    <div class="instructions">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Use your browser's screenshot tool or a screen capture utility to take a screenshot of each game preview below.</li>
+            <li>Save each image with the correct filename in the assets/images directory:</li>
+            <ul>
+                <li>Classic Sudoku: <strong>sudoku-classic.jpg</strong></li>
+                <li>2048: <strong>2048.jpg</strong></li>
+                <li>Memory Card: <strong>memory-card.jpg</strong></li>
+                <li>Solitaire: <strong>solitaire.jpg</strong></li>
+            </ul>
+            <li>If you prefer, you can use a tool like Photoshop or GIMP to create more attractive preview images.</li>
+        </ol>
+    </div>
+    
+    <div class="preview-grid">
+        <div class="preview-item">
+            <div class="preview-header sudoku">
+                9×9 Grid<br>
+                Logic Puzzle
+            </div>
+            <div class="preview-title">Classic Sudoku</div>
+        </div>
+        
+        <div class="preview-item">
+            <div class="preview-header puzzle">
+                Merge Tiles<br>
+                Get to 2048
+            </div>
+            <div class="preview-title">2048</div>
+        </div>
+        
+        <div class="preview-item">
+            <div class="preview-header memory">
+                Match Pairs<br>
+                Test Your Memory
+            </div>
+            <div class="preview-title">Memory Card</div>
+        </div>
+        
+        <div class="preview-item">
+            <div class="preview-header card">
+                Classic Card Game<br>
+                Strategy & Luck
+            </div>
+            <div class="preview-title">Solitaire</div>
+        </div>
+    </div>
+</body>
+</html> 

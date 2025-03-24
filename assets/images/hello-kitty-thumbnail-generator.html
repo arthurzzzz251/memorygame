@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Kitty - Activity Book Thumbnail Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        h1, h2 {
+            text-align: center;
+        }
+        
+        .instructions {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .thumbnail {
+            width: 300px;
+            height: 220px;
+            margin: 0 auto 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .thumbnail-header {
+            height: 135px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 20px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .thumbnail-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+        .thumbnail-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .thumbnail-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .thumbnail-info {
+            padding: 15px;
+            background: #fff;
+        }
+        
+        .thumbnail-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+        
+        .thumbnail-desc {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+        
+        .thumbnail-hello-kitty {
+            background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c8025873-3d5e-44ce-85ac-1d0a93fc3650/dfx6ik9-cd8dfd5c-e15c-4c7e-9ea9-8b8e9ada8d5d.jpg/v1/fill/w_1184,h_676,q_70,strp/hello_kitty_aesthetic_desktop_wallpaper_by_nikkistjames_dfx6ik9-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTAwIiwicGF0aCI6IlwvZlwvYzgwMjU4NzMtM2Q1ZS00NGNlLTg1YWMtMWQwYTkzZmMzNjUwXC9kZng2aWs5LWNkOGRmZDVjLWUxNWMtNGM3ZS05ZWE5LThiOGU5YWRhOGQ1ZC5qcGciLCJ3aWR0aCI6Ijw9MTU3NSJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.oSaAQSP-CkHXYlrVx5xZaIKXg4UiEDO6_LqnxVPqCdc');
+        }
+        
+        .save-instructions {
+            background: #ffe6f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello Kitty - Activity Book Thumbnail Generator</h1>
+    
+    <div class="instructions">
+        <h2>Instructions</h2>
+        <p>Use a screenshot tool to capture the thumbnail below. Save it as <strong>hello-kitty-activity.jpg</strong> in the <strong>assets/images/</strong> directory.</p>
+        <p>Recommended dimensions: 300×220 pixels</p>
+    </div>
+    
+    <div class="thumbnail">
+        <div class="thumbnail-header thumbnail-hello-kitty">
+            <div class="thumbnail-title">Hello Kitty - Activity Book</div>
+            <div class="thumbnail-subtitle">By Webcore Games</div>
+        </div>
+        <div class="thumbnail-info">
+            <h3 class="thumbnail-name">Hello Kitty - Activity Book</h3>
+            <p class="thumbnail-desc">Fun coloring, puzzles, and memory activities with Hello Kitty!</p>
+        </div>
+    </div>
+    
+    <div class="save-instructions">
+        Save as: <strong>hello-kitty-activity.jpg</strong> (300×220 pixels)
+    </div>
+</body>
+</html> 

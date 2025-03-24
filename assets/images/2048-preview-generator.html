@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048预览图生成器</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .preview-container {
+            width: 360px;
+            height: 270px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, #f7971e, #ffd200);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .grid {
+            margin: 50px auto 0;
+            width: 250px;
+            height: 250px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 8px;
+            background-color: #bbada0;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        
+        .cell {
+            background-color: #cdc1b4;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .cell-2 {
+            background-color: #eee4da;
+            color: #776e65;
+        }
+        
+        .cell-4 {
+            background-color: #ede0c8;
+            color: #776e65;
+        }
+        
+        .cell-8 {
+            background-color: #f2b179;
+            color: white;
+        }
+        
+        .cell-16 {
+            background-color: #f59563;
+            color: white;
+        }
+        
+        .cell-32 {
+            background-color: #f67c5f;
+            color: white;
+        }
+        
+        .cell-64 {
+            background-color: #f65e3b;
+            color: white;
+        }
+        
+        .cell-128 {
+            background-color: #edcf72;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .cell-256 {
+            background-color: #edcc61;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .cell-512 {
+            background-color: #edc850;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .cell-1024 {
+            background-color: #edc53f;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .cell-2048 {
+            background-color: #edc22e;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="game-title">2048</div>
+        <div class="grid" id="grid"></div>
+    </div>
+    
+    <div class="instructions">
+        <h3>使用说明：</h3>
+        <p>1. 此页面创建了一个2048游戏的预览图</p>
+        <p>2. 使用浏览器截图功能截取预览图</p>
+        <p>3. 将截图保存为 "2048.jpg"</p>
+        <p>4. 将图片保存到 assets/images/ 目录中</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('grid');
+            
+            // 创建2048网格
+            for (let i = 0; i < 16; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                grid.appendChild(cell);
+            }
+            
+            // 添加一些数字模拟游戏
+            const cells = document.querySelectorAll('.cell');
+            const values = [0, 0, 0, 0, 0, 0, 2, 0, 4, 0, 8, 0, 16, 32, 64, 128];
+            
+            values.forEach((value, index) => {
+                if (value > 0) {
+                    cells[index].textContent = value;
+                    cells[index].classList.add(`cell-${value}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

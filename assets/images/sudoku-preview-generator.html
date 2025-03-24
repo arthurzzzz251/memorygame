@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数独游戏预览图生成器</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .preview-container {
+            width: 360px;
+            height: 270px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .sudoku-grid {
+            margin: 50px auto 0;
+            width: 250px;
+            height: 250px;
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            gap: 1px;
+            background-color: #444;
+            padding: 2px;
+            border: 2px solid #666;
+        }
+        
+        .cell {
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ddd;
+        }
+        
+        .cell:nth-child(3n) {
+            border-right: 2px solid #666;
+        }
+        
+        .cell:nth-child(n+19):nth-child(-n+27),
+        .cell:nth-child(n+46):nth-child(-n+54) {
+            border-bottom: 2px solid #666;
+        }
+        
+        .filled {
+            color: #8be9fd;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        
+        .button:hover {
+            transform: scale(1.05);
+        }
+        
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="game-title">经典数独 Classic Sudoku</div>
+        <div class="sudoku-grid" id="sudoku-grid"></div>
+        <div class="controls">
+            <button class="button">简单</button>
+            <button class="button">中等</button>
+            <button class="button">困难</button>
+        </div>
+    </div>
+    
+    <div class="instructions">
+        <h3>使用说明：</h3>
+        <p>1. 此页面创建了一个数独游戏的预览图</p>
+        <p>2. 使用浏览器截图功能截取预览图</p>
+        <p>3. 将截图保存为 "sudoku-classic.jpg"</p>
+        <p>4. 将图片保存到 assets/images/ 目录中</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('sudoku-grid');
+            
+            // 创建数独网格
+            for (let i = 0; i < 81; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                grid.appendChild(cell);
+            }
+            
+            // 生成一些随机数字来模拟数独游戏
+            const cells = document.querySelectorAll('.cell');
+            const filledPositions = new Set();
+            
+            // 随机生成25个填充的数字
+            while (filledPositions.size < 25) {
+                const pos = Math.floor(Math.random() * 81);
+                if (!filledPositions.has(pos)) {
+                    filledPositions.add(pos);
+                    const num = Math.floor(Math.random() * 9) + 1;
+                    cells[pos].textContent = num;
+                    cells[pos].classList.add('filled');
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

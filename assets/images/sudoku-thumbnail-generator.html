@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game Thumbnail Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        h1, h2 {
+            text-align: center;
+        }
+        
+        .instructions {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .thumbnail {
+            width: 300px;
+            height: 220px;
+            margin: 0 auto 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .thumbnail-header {
+            height: 135px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .thumbnail-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .thumbnail-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .thumbnail-info {
+            padding: 15px;
+            background: #fff;
+        }
+        
+        .thumbnail-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+        
+        .thumbnail-desc {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+        
+        .thumbnail-crazygames {
+            background: linear-gradient(135deg, #5d4ee5, #b84de6);
+        }
+        
+        .thumbnail-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .save-instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku Game Thumbnail Generator</h1>
+    
+    <div class="instructions">
+        <h2>Instructions</h2>
+        <p>Use a screenshot tool to capture the thumbnail below. Save it as <strong>sudoku-crazygames.jpg</strong> in the <strong>assets/images/</strong> directory.</p>
+        <p>If you need to make adjustments, feel free to modify the HTML and refresh the page before taking the screenshot.</p>
+    </div>
+    
+    <div class="thumbnail-grid">
+        <!-- CrazyGames Sudoku Thumbnail -->
+        <div class="thumbnail">
+            <div class="thumbnail-header thumbnail-crazygames">
+                <div class="thumbnail-title">Sudoku Online</div>
+                <div class="thumbnail-subtitle">By 3S Games (CrazyGames)</div>
+            </div>
+            <div class="thumbnail-info">
+                <h3 class="thumbnail-name">Sudoku Online</h3>
+                <p class="thumbnail-desc">A full-featured online Sudoku with multiple difficulty levels and hints.</p>
+            </div>
+        </div>
+        
+        <div class="save-instructions">
+            Save as: <strong>sudoku-crazygames.jpg</strong> (300×220 pixels)
+        </div>
+    </div>
+</body>
+</html> 

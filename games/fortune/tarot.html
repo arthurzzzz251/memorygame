@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Reading</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            overflow-x: hidden;
+        }
+        
+        .fortune-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            color: #f8f8f8;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .reading-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .reading-option {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .reading-option:hover, .reading-option.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .reading-option h3 {
+            color: #f8f8f8;
+            margin-bottom: 10px;
+        }
+        
+        .reading-option p {
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+        
+        .reading-area {
+            margin-bottom: 40px;
+        }
+        
+        .deck-area {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .deck {
+            width: 120px;
+            height: 200px;
+            background: linear-gradient(135deg, #654ea3, #da98b4);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .deck:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .deck::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+        
+        .deck::after {
+            content: '✨';
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            perspective: 1000px;
+        }
+        
+        .card {
+            width: 120px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #654ea3, #da98b4);
+        }
+        
+        .card-back {
+            background: #fff;
+            color: #000;
+            transform: rotateY(180deg);
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-image {
+            width: 80%;
+            height: 60%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 5px;
+        }
+        
+        .card-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .card-meaning {
+            font-size: 0.7rem;
+            color: #444;
+        }
+        
+        .reading-result {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+            display: none;
+        }
+        
+        .reading-explanation {
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        
+        button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 10px 25px;
+            color: white;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .mystic-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .mystic-element {
+            position: absolute;
+            opacity: 0.3;
+            font-size: 2rem;
+            animation: float 10s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .reading-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .reading-option {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .card {
+                width: 100px;
+                height: 170px;
+            }
+            
+            .card-title {
+                font-size: 0.7rem;
+            }
+            
+            .card-meaning {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fortune-container">
+        <div class="header">
+            <h1 class="title">Tarot Reading</h1>
+            <p class="subtitle">Discover insights into your past, present, and future</p>
+        </div>
+        
+        <div class="reading-options">
+            <div class="reading-option" data-cards="3" data-type="past-present-future">
+                <h3>Past, Present & Future</h3>
+                <p>A three-card spread revealing influences from your past, your current situation, and possible future outcomes.</p>
+            </div>
+            
+            <div class="reading-option" data-cards="1" data-type="daily">
+                <h3>Daily Card</h3>
+                <p>A single card to provide guidance for your day ahead.</p>
+            </div>
+            
+            <div class="reading-option" data-cards="5" data-type="cross">
+                <h3>Five Card Cross</h3>
+                <p>An in-depth reading covering multiple aspects of your situation.</p>
+            </div>
+        </div>
+        
+        <div class="reading-area">
+            <div class="deck-area">
+                <div class="deck" id="tarot-deck">
+                    <!-- Deck of cards -->
+                </div>
+            </div>
+            
+            <div class="card-container" id="card-container">
+                <!-- Cards will be placed here -->
+            </div>
+            
+            <div class="reading-result" id="reading-result">
+                <h2>Your Reading</h2>
+                <div class="reading-explanation" id="reading-explanation"></div>
+            </div>
+            
+            <div class="controls">
+                <button id="shuffle-btn">Shuffle Deck</button>
+                <button id="reveal-btn" disabled>Reveal All</button>
+                <button id="new-reading-btn">New Reading</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mystic-elements">
+        <!-- Mystic decorative elements -->
+        <div class="mystic-element" style="top: 10%; left: 5%;">✨</div>
+        <div class="mystic-element" style="top: 20%; left: 80%;">🌙</div>
+        <div class="mystic-element" style="top: 50%; left: 10%;">⭐</div>
+        <div class="mystic-element" style="top: 70%; left: 85%;">✨</div>
+        <div class="mystic-element" style="top: 85%; left: 20%;">🔮</div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const readingOptions = document.querySelectorAll('.reading-option');
+            const deck = document.getElementById('tarot-deck');
+            const cardContainer = document.getElementById('card-container');
+            const readingResult = document.getElementById('reading-result');
+            const readingExplanation = document.getElementById('reading-explanation');
+            const shuffleBtn = document.getElementById('shuffle-btn');
+            const revealBtn = document.getElementById('reveal-btn');
+            const newReadingBtn = document.getElementById('new-reading-btn');
+            
+            // Game state
+            let selectedReading = null;
+            let cardCount = 0;
+            let drawnCards = [];
+            let allCardsRevealed = false;
+            
+            // Tarot card data
+            const tarotCards = [
+                {
+                    name: "The Fool",
+                    image: "fool.jpg",
+                    uprightMeaning: "New beginnings, spontaneity, free spirit",
+                    reversedMeaning: "Recklessness, risk-taking, inconsideration"
+                },
+                {
+                    name: "The Magician",
+                    image: "magician.jpg",
+                    uprightMeaning: "Manifestation, resourcefulness, power",
+                    reversedMeaning: "Manipulation, untapped talents"
+                },
+                {
+                    name: "The High Priestess",
+                    image: "high-priestess.jpg",
+                    uprightMeaning: "Intuition, unconscious, divine feminine",
+                    reversedMeaning: "Secrets, disconnected from intuition"
+                },
+                {
+                    name: "The Empress",
+                    image: "empress.jpg",
+                    uprightMeaning: "Femininity, nurturing, abundance",
+                    reversedMeaning: "Dependence, smothering, emptiness"
+                },
+                {
+                    name: "The Emperor",
+                    image: "emperor.jpg",
+                    uprightMeaning: "Authority, structure, control, fatherhood",
+                    reversedMeaning: "Domination, excessive control, rigidity"
+                },
+                {
+                    name: "The Hierophant",
+                    image: "hierophant.jpg",
+                    uprightMeaning: "Tradition, conformity, spirituality",
+                    reversedMeaning: "Rebellion, subversiveness, new ideas"
+                },
+                {
+                    name: "The Lovers",
+                    image: "lovers.jpg",
+                    uprightMeaning: "Love, harmony, relationships, choices",
+                    reversedMeaning: "Disharmony, imbalance, misalignment"
+                },
+                {
+                    name: "The Chariot",
+                    image: "chariot.jpg",
+                    uprightMeaning: "Control, will power, victory, determination",
+                    reversedMeaning: "Lack of control, opposition, lack of direction"
+                },
+                {
+                    name: "Strength",
+                    image: "strength.jpg",
+                    uprightMeaning: "Courage, inner strength, persuasion",
+                    reversedMeaning: "Self-doubt, weakness, insecurity"
+                },
+                {
+                    name: "The Hermit",
+                    image: "hermit.jpg",
+                    uprightMeaning: "Soul-searching, introspection, guidance",
+                    reversedMeaning: "Isolation, loneliness, withdrawal"
+                },
+                {
+                    name: "Wheel of Fortune",
+                    image: "wheel-of-fortune.jpg",
+                    uprightMeaning: "Good luck, karma, destiny, a turning point",
+                    reversedMeaning: "Bad luck, negative external forces"
+                },
+                {
+                    name: "Justice",
+                    image: "justice.jpg",
+                    uprightMeaning: "Justice, fairness, truth, law, karma",
+                    reversedMeaning: "Unfairness, dishonesty, lack of accountability"
+                },
+                {
+                    name: "The Hanged Man",
+                    image: "hanged-man.jpg",
+                    uprightMeaning: "Surrender, letting go, new perspectives",
+                    reversedMeaning: "Indecision, resistance, stalling"
+                },
+                {
+                    name: "Death",
+                    image: "death.jpg",
+                    uprightMeaning: "Endings, change, transformation",
+                    reversedMeaning: "Resistance to change, stagnation"
+                },
+                {
+                    name: "Temperance",
+                    image: "temperance.jpg",
+                    uprightMeaning: "Balance, moderation, patience, purpose",
+                    reversedMeaning: "Imbalance, excess, lack of patience"
+                },
+                {
+                    name: "The Devil",
+                    image: "devil.jpg",
+                    uprightMeaning: "Addiction, materialism, playfulness",
+                    reversedMeaning: "Detachment, breaking free, restraint"
+                },
+                {
+                    name: "The Tower",
+                    image: "tower.jpg",
+                    uprightMeaning: "Disaster, upheaval, sudden change",
+                    reversedMeaning: "Avoidance of disaster, fear of change"
+                },
+                {
+                    name: "The Star",
+                    image: "star.jpg",
+                    uprightMeaning: "Hope, faith, rejuvenation",
+                    reversedMeaning: "Discouragement, faithlessness"
+                },
+                {
+                    name: "The Moon",
+                    image: "moon.jpg",
+                    uprightMeaning: "Illusion, fear, anxiety, subconscious",
+                    reversedMeaning: "Release of fear, repressed emotion"
+                },
+                {
+                    name: "The Sun",
+                    image: "sun.jpg",
+                    uprightMeaning: "Positivity, fun, warmth, vitality",
+                    reversedMeaning: "Temporary depression, lack of success"
+                },
+                {
+                    name: "Judgement",
+                    image: "judgement.jpg",
+                    uprightMeaning: "Rebirth, inner calling, absolution",
+                    reversedMeaning: "Self-doubt, failure of self-reflection"
+                },
+                {
+                    name: "The World",
+                    image: "world.jpg",
+                    uprightMeaning: "Completion, accomplishment, travel",
+                    reversedMeaning: "Lack of completion, stagnation"
+                }
+            ];
+            
+            // Event listeners
+            readingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    readingOptions.forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedReading = {
+                        type: this.dataset.type,
+                        cards: parseInt(this.dataset.cards)
+                    };
+                    resetReading();
+                    prepareReading();
+                });
+            });
+            
+            deck.addEventListener('click', drawCard);
+            shuffleBtn.addEventListener('click', shuffleDeck);
+            revealBtn.addEventListener('click', revealAllCards);
+            newReadingBtn.addEventListener('click', resetReading);
+            
+            // Function to reset reading
+            function resetReading() {
+                cardContainer.innerHTML = '';
+                readingResult.style.display = 'none';
+                drawnCards = [];
+                cardCount = 0;
+                allCardsRevealed = false;
+                revealBtn.disabled = true;
+            }
+            
+            // Function to prepare for reading
+            function prepareReading() {
+                // Create placeholder cards
+                if (selectedReading) {
+                    for (let i = 0; i < selectedReading.cards; i++) {
+                        const cardPlaceholder = document.createElement('div');
+                        cardPlaceholder.className = 'card-placeholder';
+                        cardPlaceholder.style.width = '120px';
+                        cardPlaceholder.style.height = '200px';
+                        cardPlaceholder.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        cardPlaceholder.style.borderRadius = '10px';
+                        cardPlaceholder.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+                        cardPlaceholder.style.border = '2px dashed rgba(255, 255, 255, 0.3)';
+                        cardContainer.appendChild(cardPlaceholder);
+                    }
+                }
+            }
+            
+            // Function to draw a card
+            function drawCard() {
+                if (!selectedReading || cardCount >= selectedReading.cards) return;
+                
+                // Replace placeholder with card
+                const placeholders = document.querySelectorAll('.card-placeholder');
+                if (placeholders.length > 0) {
+                    placeholders[0].remove();
+                }
+                
+                // Draw a random card
+                const randomIndex = Math.floor(Math.random() * tarotCards.length);
+                const card = tarotCards[randomIndex];
+                const isReversed = Math.random() > 0.5;
+                const drawnCard = {
+                    ...card,
+                    isReversed: isReversed
+                };
+                drawnCards.push(drawnCard);
+                
+                // Create card element
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.innerHTML = `
+                    <div class="card-front"></div>
+                    <div class="card-back">
+                        <div class="card-image" style="background-image: url('../../assets/images/tarot/${card.image || 'card-back.jpg'}')"></div>
+                        <div class="card-title">${card.name}</div>
+                        <div class="card-meaning">${isReversed ? card.reversedMeaning : card.uprightMeaning}</div>
+                    </div>
+                `;
+                
+                // Add rotation for reversed cards
+                if (isReversed) {
+                    cardElement.querySelector('.card-back').style.transform = 'rotateY(180deg) rotate(180deg)';
+                }
+                
+                cardContainer.appendChild(cardElement);
+                
+                // Add click event to flip card
+                cardElement.addEventListener('click', function() {
+                    if (!this.classList.contains('flipped')) {
+                        this.classList.add('flipped');
+                        if (allCardsDrawn()) {
+                            revealBtn.disabled = false;
+                        }
+                    }
+                });
+                
+                cardCount++;
+                
+                // If all cards are drawn, enable reveal button
+                if (allCardsDrawn()) {
+                    deck.style.opacity = '0.5';
+                    deck.style.cursor = 'default';
+                }
+            }
+            
+            // Function to check if all cards are drawn
+            function allCardsDrawn() {
+                return selectedReading && cardCount >= selectedReading.cards;
+            }
+            
+            // Function to shuffle deck
+            function shuffleDeck() {
+                if (!selectedReading) return;
+                
+                // Animation
+                deck.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    deck.style.transform = 'translateY(0)';
+                }, 200);
+                
+                // Reset current reading if cards are already drawn
+                if (drawnCards.length > 0) {
+                    resetReading();
+                    prepareReading();
+                }
+            }
+            
+            // Function to reveal all cards
+            function revealAllCards() {
+                if (!allCardsDrawn()) return;
+                
+                const cards = document.querySelectorAll('.card:not(.flipped)');
+                cards.forEach(card => {
+                    card.classList.add('flipped');
+                });
+                
+                allCardsRevealed = true;
+                interpretReading();
+            }
+            
+            // Function to interpret reading
+            function interpretReading() {
+                readingResult.style.display = 'block';
+                
+                let interpretation = '';
+                
+                switch (selectedReading.type) {
+                    case 'past-present-future':
+                        interpretation += `<h3>Your Three Card Reading</h3>
+                        <p><strong>Past:</strong> ${drawnCards[0].name} ${drawnCards[0].isReversed ? '(Reversed)' : ''} - 
+                        This card represents influences from your past. ${drawnCards[0].isReversed ? drawnCards[0].reversedMeaning : drawnCards[0].uprightMeaning}</p>
+                        
+                        <p><strong>Present:</strong> ${drawnCards[1].name} ${drawnCards[1].isReversed ? '(Reversed)' : ''} - 
+                        This card represents your current situation. ${drawnCards[1].isReversed ? drawnCards[1].reversedMeaning : drawnCards[1].uprightMeaning}</p>
+                        
+                        <p><strong>Future:</strong> ${drawnCards[2].name} ${drawnCards[2].isReversed ? '(Reversed)' : ''} - 
+                        This card offers insight into possible future outcomes. ${drawnCards[2].isReversed ? drawnCards[2].reversedMeaning : drawnCards[2].uprightMeaning}</p>
+                        
+                        <p>Overall, this reading suggests that ${getOverallMeaning(drawnCards)}.</p>`;
+                        break;
+                        
+                    case 'daily':
+                        interpretation += `<h3>Your Daily Card</h3>
+                        <p><strong>${drawnCards[0].name} ${drawnCards[0].isReversed ? '(Reversed)' : ''}</strong></p>
+                        <p>This card provides guidance for your day ahead. ${drawnCards[0].isReversed ? drawnCards[0].reversedMeaning : drawnCards[0].uprightMeaning}</p>
+                        <p>Today, focus on ${getDailyAdvice(drawnCards[0])}.</p>`;
+                        break;
+                        
+                    case 'cross':
+                        interpretation += `<h3>Your Five Card Cross Reading</h3>
+                        <p><strong>Center (Present situation):</strong> ${drawnCards[0].name} ${drawnCards[0].isReversed ? '(Reversed)' : ''} - 
+                        This card represents your current situation. ${drawnCards[0].isReversed ? drawnCards[0].reversedMeaning : drawnCards[0].uprightMeaning}</p>
+                        
+                        <p><strong>Top (Challenge):</strong> ${drawnCards[1].name} ${drawnCards[1].isReversed ? '(Reversed)' : ''} - 
+                        This card represents the challenge you're facing. ${drawnCards[1].isReversed ? drawnCards[1].reversedMeaning : drawnCards[1].uprightMeaning}</p>
+                        
+                        <p><strong>Left (Past influences):</strong> ${drawnCards[2].name} ${drawnCards[2].isReversed ? '(Reversed)' : ''} - 
+                        This card represents past influences. ${drawnCards[2].isReversed ? drawnCards[2].reversedMeaning : drawnCards[2].uprightMeaning}</p>
+                        
+                        <p><strong>Right (Future possibilities):</strong> ${drawnCards[3].name} ${drawnCards[3].isReversed ? '(Reversed)' : ''} - 
+                        This card represents future possibilities. ${drawnCards[3].isReversed ? drawnCards[3].reversedMeaning : drawnCards[3].uprightMeaning}</p>
+                        
+                        <p><strong>Bottom (Potential outcome):</strong> ${drawnCards[4].name} ${drawnCards[4].isReversed ? '(Reversed)' : ''} - 
+                        This card represents the potential outcome. ${drawnCards[4].isReversed ? drawnCards[4].reversedMeaning : drawnCards[4].uprightMeaning}</p>
+                        
+                        <p>Overall, this reading suggests that ${getCrossReadingAdvice(drawnCards)}.</p>`;
+                        break;
+                }
+                
+                readingExplanation.innerHTML = interpretation;
+                
+                // Scroll to the reading result
+                readingResult.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Helper function to get overall meaning
+            function getOverallMeaning(cards) {
+                // This is a simplified interpretation logic
+                const positiveCards = cards.filter(card => !card.isReversed).length;
+                const negativeCards = cards.length - positiveCards;
+                
+                if (positiveCards > negativeCards) {
+                    return "you are on a positive path with good energy surrounding you. While challenges may appear, you have the strength to overcome them";
+                } else if (positiveCards < negativeCards) {
+                    return "you're facing some challenges that require your attention. Take time to reflect and consider new approaches to your current situation";
+                } else {
+                    return "you're at a crossroads with equal potential for growth or stagnation. Your choices in the coming days will be particularly significant";
+                }
+            }
+            
+            // Helper function to get daily advice
+            function getDailyAdvice(card) {
+                // Simple advice based on card name
+                const adviceMap = {
+                    "The Fool": "embracing new opportunities without fear",
+                    "The Magician": "harnessing your personal power and talents",
+                    "The High Priestess": "listening to your intuition and inner voice",
+                    "The Empress": "nurturing yourself and others around you",
+                    "The Emperor": "creating structure and maintaining discipline",
+                    "The Hierophant": "seeking wisdom from traditional sources or mentors",
+                    "The Lovers": "making choices from the heart and building connections",
+                    "The Chariot": "maintaining focus and determination",
+                    "Strength": "approaching challenges with courage and compassion",
+                    "The Hermit": "taking time for self-reflection and solitude",
+                    "Wheel of Fortune": "embracing change and recognizing opportunities",
+                    "Justice": "seeking balance and making fair decisions",
+                    "The Hanged Man": "gaining new perspectives by letting go",
+                    "Death": "releasing what no longer serves you",
+                    "Temperance": "finding balance and moderation in all things",
+                    "The Devil": "recognizing unhealthy attachments or limitations",
+                    "The Tower": "preparing for unexpected changes",
+                    "The Star": "maintaining hope and following your inspiration",
+                    "The Moon": "navigating uncertainty with intuition",
+                    "The Sun": "expressing joy and authentic self-confidence",
+                    "Judgement": "self-reflection and answering your calling",
+                    "The World": "recognizing your achievements and completion"
+                };
+                
+                let advice = adviceMap[card.name] || "mindfulness and awareness";
+                
+                if (card.isReversed) {
+                    advice = "addressing " + advice.replace("embracing", "resistance to")
+                        .replace("maintaining", "lack of")
+                        .replace("seeking", "avoiding")
+                        .replace("recognizing", "overlooking");
+                }
+                
+                return advice;
+            }
+            
+            // Helper function to get cross reading advice
+            function getCrossReadingAdvice(cards) {
+                // This is a simplified interpretation logic based on positions
+                const centerPositive = !cards[0].isReversed;
+                const challengePositive = !cards[1].isReversed;
+                const outcomePositive = !cards[4].isReversed;
+                
+                if (centerPositive && outcomePositive) {
+                    return "you have a strong foundation to overcome current challenges, leading to a favorable outcome";
+                } else if (!centerPositive && outcomePositive) {
+                    return "despite current difficulties, there is potential for positive transformation if you address the challenges directly";
+                } else if (centerPositive && !outcomePositive) {
+                    return "while your current position is favorable, caution is advised as unforeseen obstacles may affect the outcome";
+                } else {
+                    return "you're facing significant challenges that require careful navigation and possibly a change in approach to avoid unfavorable outcomes";
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

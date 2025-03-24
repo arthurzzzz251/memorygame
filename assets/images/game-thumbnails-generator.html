@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Thumbnails Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .instructions {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .thumbnail {
+            width: 300px;
+            height: 220px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .thumb-image {
+            width: 100%;
+            height: 135px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            background-size: cover;
+            background-position: center;
+        }
+        .thumb-info {
+            padding: 15px;
+            background: #fff;
+        }
+        .thumb-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+        }
+        .thumb-desc {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .mahjong {
+            background: linear-gradient(135deg, #2a4d69, #4b88a2);
+        }
+        .tarot {
+            background: linear-gradient(135deg, #0f0c29, #302b63);
+        }
+        .dimensions {
+            background: #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Thumbnails Generator</h1>
+    
+    <div class="instructions">
+        <h2>Instructions</h2>
+        <p>Below are standard size thumbnails for two games. Use a screenshot tool to capture these images and save them with the following filenames:</p>
+        <ul>
+            <li><strong>Mahjong Connect:</strong> assets/images/mahjong-connect.jpg</li>
+            <li><strong>Tarot Reading:</strong> assets/images/tarot.jpg</li>
+        </ul>
+        <p>All thumbnails are <span class="dimensions">300x220 pixels</span>, with image section being <span class="dimensions">300x135 pixels</span></p>
+    </div>
+    
+    <div class="thumbnails">
+        <!-- Mahjong Connect thumbnail -->
+        <div class="thumbnail">
+            <div class="thumb-image mahjong">
+                Mahjong Connect<br>
+                Match Tiles
+            </div>
+            <div class="thumb-info">
+                <h3 class="thumb-title">Mahjong Connect</h3>
+                <p class="thumb-desc">Connect matching tiles and test your observation skills</p>
+            </div>
+        </div>
+        
+        <!-- Tarot Reading thumbnail -->
+        <div class="thumbnail">
+            <div class="thumb-image tarot">
+                Tarot Reading<br>
+                Fortune Telling
+            </div>
+            <div class="thumb-info">
+                <h3 class="thumb-title">Tarot Reading</h3>
+                <p class="thumb-desc">Discover your past, present, and future with mystical cards</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Display actual dimensions
+        document.addEventListener('DOMContentLoaded', function() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumbnail => {
+                const width = thumbnail.offsetWidth;
+                const height = thumbnail.offsetHeight;
+                const image = thumbnail.querySelector('.thumb-image');
+                const imageHeight = image.offsetHeight;
+                
+                console.log(`Thumbnail size: ${width}x${height}px, Image section: ${width}x${imageHeight}px`);
+            });
+        });
+    </script>
+</body>
+</html> 

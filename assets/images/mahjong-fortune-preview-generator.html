@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahjong & Fortune Preview Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .instructions h2 {
+            margin-top: 0;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .preview-item {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .preview-header {
+            height: 135px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+        }
+        .preview-title {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .mahjong {
+            background: linear-gradient(135deg, #2a4d69, #4b88a2);
+        }
+        .fortune {
+            background: linear-gradient(135deg, #0f0c29, #302b63);
+        }
+    </style>
+</head>
+<body>
+    <h1>Mahjong & Fortune Game Preview Generator</h1>
+    
+    <div class="instructions">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Use your browser's screenshot tool or a screen capture utility to take a screenshot of each game preview below.</li>
+            <li>Save each image with the correct filename in the assets/images directory:</li>
+            <ul>
+                <li>Mahjong Connect: <strong>mahjong-connect.jpg</strong></li>
+                <li>Tarot Reading: <strong>tarot.jpg</strong></li>
+            </ul>
+            <li>If you prefer, you can use a tool like Photoshop or GIMP to create more attractive preview images.</li>
+        </ol>
+    </div>
+    
+    <div class="preview-grid">
+        <div class="preview-item">
+            <div class="preview-header mahjong">
+                Match Identical Tiles<br>
+                Clear the Board
+            </div>
+            <div class="preview-title">Mahjong Connect</div>
+        </div>
+        
+        <div class="preview-item">
+            <div class="preview-header fortune">
+                Discover Your Future<br>
+                Mystical Card Reading
+            </div>
+            <div class="preview-title">Tarot Reading</div>
+        </div>
+    </div>
+</body>
+</html> 

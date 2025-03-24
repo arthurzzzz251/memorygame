@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Telling Games - GameZone</title>
+    <meta name="description" content="Discover your future with our collection of fortune telling games. Try Tarot readings, crystal ball predictions, and more mystical experiences online.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <style>
+        :root {
+            --primary-color: #ff4655;
+            --secondary-color: #0f1923;
+            --background-color: #111111;
+            --dark-background: #000000;
+            --text-color: #ffffff;
+            --light-text: #fff;
+            --card-background: #222222;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --accent-color: #ff4655;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .game-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            background-color: var(--card-background);
+        }
+        
+        .game-thumb {
+            height: 135px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .game-info {
+            padding: 10px;
+        }
+        
+        .game-title {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--light-text);
+        }
+        
+        .play-now {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-card:hover .play-now {
+            opacity: 1;
+        }
+        
+        .game-card:hover .game-thumb::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), #9900ff);
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0;
+        }
+        
+        .hero h1 {
+            color: var(--light-text);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            color: var(--light-text);
+            font-size: 1.8rem;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">GameZone</a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="sudoku.html">Sudoku</a></li>
+                    <li><a href="memory.html">Memory</a></li>
+                    <li><a href="cards.html">Card Games</a></li>
+                    <li><a href="mahjong.html">Mahjong</a></li>
+                    <li><a href="fortune.html" class="active">Fortune Telling</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-box">
+                <form class="search-form">
+                    <input type="text" placeholder="Search games...">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Fortune Telling Games</h1>
+                <p>Discover insights into your past, present, and future with our mystical fortune telling games</p>
+            </section>
+            
+            <!-- Fortune Telling Games Section -->
+            <section class="featured-games">
+                <h2 class="section-title">Popular Fortune Telling Games</h2>
+                <div class="game-grid">
+                    <!-- Tarot Reading -->
+                    <div class="game-card" data-tags="fortune,tarot">
+                        <div class="game-thumb" style="background-image: url('../assets/images/tarot.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Tarot Reading</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/fortune/tarot.html', 'Tarot Reading')">Play</a>
+                    </div>
+                    
+                    <!-- Crystal Ball -->
+                    <div class="game-card" data-tags="fortune,crystal">
+                        <div class="game-thumb" style="background-image: url('../assets/images/crystal-ball.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Crystal Ball</div>
+                        </div>
+                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/fortune/crystal-ball.html', 'Crystal Ball')">Play</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">About GameZone</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="sudoku.html">Sudoku</a></li>
+                    <li><a href="memory.html">Memory</a></li>
+                    <li><a href="cards.html">Card Games</a></li>
+                    <li><a href="mahjong.html">Mahjong</a></li>
+                    <li><a href="fortune.html">Fortune Telling</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                &copy; 2023 GameZone. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="../js/main.js"></script>
+</body>
+</html> 

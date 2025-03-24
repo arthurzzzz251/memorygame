@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Games - GameZone</title>
+    <meta name="description" content="Play free online Sudoku games of all difficulty levels. Classic Sudoku, Killer Sudoku, and other variants to challenge your logic skills.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">GameZone</a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="sudoku.html" class="active">Sudoku</a></li>
+                    <li><a href="memory.html">Memory</a></li>
+                    <li><a href="cards.html">Card Games</a></li>
+                    <li><a href="mahjong.html">Mahjong</a></li>
+                    <li><a href="fortune.html">Fortune Telling</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-box">
+                <form class="search-form">
+                    <input type="text" placeholder="Search games...">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Category Header -->
+            <section class="category-header">
+                <h1 class="category-title">Sudoku Games</h1>
+                <p class="category-description">
+                    Challenge your logical thinking with our collection of Sudoku games. From easy to expert difficulty levels, we have puzzles for beginners and seasoned Sudoku masters alike. Enjoy classic 9x9 Sudoku or try one of our exciting variants.
+                </p>
+            </section>
+            
+            <!-- Filter Options -->
+            <section class="filter-options">
+                <div class="filter-label">Filter by:</div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Sudoku</button>
+                    <button class="filter-btn" data-filter="classic">Classic</button>
+                    <button class="filter-btn" data-filter="variant">Variants</button>
+                    <button class="filter-btn" data-filter="easy">Easy</button>
+                    <button class="filter-btn" data-filter="hard">Hard</button>
+                </div>
+            </section>
+            
+            <!-- Sudoku Games Grid -->
+            <section class="games-grid">
+                <div class="game-grid">
+                    <!-- CrazyGames Sudoku -->
+                    <div class="game-card" data-tags="sudoku,classic,easy,medium,hard">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-crazygames.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Sudoku Online</div>
+                            <div class="game-description">A full-featured online Sudoku with multiple difficulty levels and hints.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/crazygames-sudoku.html', 'Sudoku Online')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Classic Sudoku -->
+                    <div class="game-card" data-tags="sudoku,classic,easy,medium,hard">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-classic.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Classic Sudoku</div>
+                            <div class="game-description">The traditional 9x9 Sudoku puzzle with multiple difficulty levels.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/classic.html', 'Classic Sudoku')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Killer Sudoku -->
+                    <div class="game-card" data-tags="sudoku,variant,hard">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-killer.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Killer Sudoku</div>
+                            <div class="game-description">A challenging Sudoku variant with sum regions.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/killer.html', 'Killer Sudoku')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Sudoku X -->
+                    <div class="game-card" data-tags="sudoku,variant,medium">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-x.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Sudoku X</div>
+                            <div class="game-description">Classic Sudoku with additional constraints on the diagonals.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/sudoku-x.html', 'Sudoku X')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mini Sudoku -->
+                    <div class="game-card" data-tags="sudoku,classic,easy">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-mini.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Mini Sudoku</div>
+                            <div class="game-description">A smaller 6x6 Sudoku puzzle, perfect for quick sessions.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/mini.html', 'Mini Sudoku')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Sudoku Daily Challenge -->
+                    <div class="game-card" data-tags="sudoku,classic,daily">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-daily.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Daily Challenge</div>
+                            <div class="game-description">A new Sudoku puzzle every day to keep your mind sharp.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/daily-challenge.html', 'Daily Sudoku Challenge')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Samurai Sudoku -->
+                    <div class="game-card" data-tags="sudoku,variant,hard">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-samurai.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Samurai Sudoku</div>
+                            <div class="game-description">Five interlocking Sudoku puzzles for the ultimate challenge.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/samurai.html', 'Samurai Sudoku')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Jigsaw Sudoku -->
+                    <div class="game-card" data-tags="sudoku,variant,medium">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-jigsaw.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Jigsaw Sudoku</div>
+                            <div class="game-description">Sudoku with irregularly shaped regions instead of 3x3 boxes.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/jigsaw.html', 'Jigsaw Sudoku')">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Sudoku for Kids -->
+                    <div class="game-card" data-tags="sudoku,classic,easy">
+                        <div class="game-thumb" style="background-image: url('../assets/images/sudoku-kids.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Sudoku for Kids</div>
+                            <div class="game-description">Simple 4x4 Sudoku with colorful themes for young players.</div>
+                            <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/sudoku/kids.html', 'Sudoku for Kids')">Play Now</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>About GameZone</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="sudoku.html">Sudoku</a></li>
+                    <li><a href="memory.html">Memory</a></li>
+                    <li><a href="cards.html">Card Games</a></li>
+                    <li><a href="mahjong.html">Mahjong</a></li>
+                    <li><a href="fortune.html">Fortune Telling</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Game Submission</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                    <li><a href="#">Developers</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                &copy; 2023 GameZone. All rights reserved. All games on this website are the property of their respective owners.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="../js/main.js"></script>
+    
+    <!-- Category-specific JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    filterGames(filter);
+                });
+            });
+            
+            // Initialize with "all" filter
+            filterGames('all');
+        });
+    </script>
+</body>
+</html> 

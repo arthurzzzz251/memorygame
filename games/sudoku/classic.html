@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Sudoku - GameZone</title>
+    <meta name="description" content="Play Classic Sudoku online for free. The traditional 9x9 logic puzzle with multiple difficulty levels. No download required.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #111111;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            color: #ff4655;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .difficulty-btn {
+            padding: 8px 15px;
+            background-color: #222222;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .difficulty-btn:hover {
+            background-color: #333333;
+        }
+        
+        .difficulty-btn.active {
+            background-color: #ff4655;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .sudoku-board {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            gap: 1px;
+            background-color: #444;
+            border: 2px solid #ff4655;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 1/1;
+        }
+        
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #222222;
+            font-size: 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+        
+        .cell:hover {
+            background-color: #333333;
+        }
+        
+        .cell.selected {
+            background-color: #444444;
+        }
+        
+        .cell.given {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .cell.filled {
+            color: #aaaaaa;
+        }
+        
+        .cell.error {
+            color: #ff4655;
+        }
+        
+        /* Add borders to distinguish 3x3 grids */
+        .cell:nth-child(3n) {
+            border-right: 2px solid #444;
+        }
+        
+        .cell:nth-child(n+19):nth-child(-n+27),
+        .cell:nth-child(n+46):nth-child(-n+54) {
+            border-bottom: 2px solid #444;
+        }
+        
+        .number-pad {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .number-btn, .control-btn {
+            padding: 10px;
+            background-color: #222222;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .number-btn:hover, .control-btn:hover {
+            background-color: #333333;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background-color: #222222;
+        }
+        
+        .message.show {
+            opacity: 1;
+        }
+        
+        .success-message {
+            background-color: #227722;
+            color: white;
+        }
+        
+        .error-message {
+            background-color: #772222;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="../../index.html" class="logo">GameZone</a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../categories/sudoku.html" class="active">Sudoku</a></li>
+                    <li><a href="../../categories/memory.html">Memory</a></li>
+                    <li><a href="../../categories/cards.html">Card Games</a></li>
+                    <li><a href="../../categories/mahjong.html">Mahjong</a></li>
+                    <li><a href="../../categories/fortune.html">Fortune Telling</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-box">
+                <form class="search-form">
+                    <input type="text" placeholder="Search games...">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Game Detail -->
+            <section class="game-detail">
+                <div class="game-header">
+                    <h1 class="game-title-big">Classic Sudoku</h1>
+                    <div class="game-category">Category: <a href="../../categories/sudoku.html">Sudoku</a></div>
+                </div>
+                
+                <!-- Game Controls -->
+                <div class="game-container">
+                    <div class="game-header">
+                        <div class="difficulty-selector">
+                            <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+                            <button class="difficulty-btn active" data-difficulty="medium">Medium</button>
+                            <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                        </div>
+                        
+                        <div class="timer">00:00</div>
+                    </div>
+                    
+                    <div class="sudoku-board" id="sudoku-board"></div>
+                    
+                    <div class="number-pad">
+                        <button class="number-btn" data-number="1">1</button>
+                        <button class="number-btn" data-number="2">2</button>
+                        <button class="number-btn" data-number="3">3</button>
+                        <button class="number-btn" data-number="4">4</button>
+                        <button class="number-btn" data-number="5">5</button>
+                        <button class="number-btn" data-number="6">6</button>
+                        <button class="number-btn" data-number="7">7</button>
+                        <button class="number-btn" data-number="8">8</button>
+                        <button class="number-btn" data-number="9">9</button>
+                        <button class="number-btn" data-number="0">Clear</button>
+                    </div>
+                    
+                    <div class="control-buttons">
+                        <button class="control-btn" id="new-game-btn">New Game</button>
+                        <button class="control-btn" id="hint-btn">Hint</button>
+                        <button class="control-btn" id="solve-btn">Solve</button>
+                    </div>
+                    
+                    <div class="message" id="message"></div>
+                </div>
+                
+                <div class="game-description-long">
+                    <h2>How to Play Classic Sudoku</h2>
+                    <p>Sudoku is a logic-based number placement puzzle. The objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 sub-grids (also called boxes or regions) contain all of the digits from 1 to 9 without repetition.</p>
+                    
+                    <h3>Rules:</h3>
+                    <ul>
+                        <li>Each row must contain the digits 1-9 without repetition.</li>
+                        <li>Each column must contain the digits 1-9 without repetition.</li>
+                        <li>Each of the nine 3×3 sub-boxes must contain the digits 1-9 without repetition.</li>
+                    </ul>
+                    
+                    <h3>Tips for Solving Sudoku Puzzles:</h3>
+                    <ol>
+                        <li><strong>Scanning:</strong> Look for opportunities to fill in cells by checking rows, columns, and boxes for missing numbers.</li>
+                        <li><strong>Elimination:</strong> Identify what numbers can go in each empty cell by eliminating impossible numbers.</li>
+                        <li><strong>Singles:</strong> Find cells where only one number can possibly go.</li>
+                        <li><strong>Hidden Singles:</strong> Look for numbers that can only go in one specific cell within a row, column, or box.</li>
+                        <li><strong>Advanced Techniques:</strong> For harder puzzles, techniques like pairs, triples, X-Wing, and Swordfish can be used.</li>
+                    </ol>
+                    
+                    <p>Challenge yourself with different difficulty levels and improve your logic skills with our Classic Sudoku game!</p>
+                </div>
+            </section>
+            
+            <!-- Related Games -->
+            <section class="related-games">
+                <h2 class="section-title">Similar Games You Might Enjoy</h2>
+                <div class="game-grid">
+                    <div class="game-card" data-tags="sudoku,variant,hard">
+                        <div class="game-thumb" style="background-image: url('../../assets/images/sudoku-killer.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Killer Sudoku</div>
+                            <div class="game-description">A challenging Sudoku variant with sum regions.</div>
+                            <a href="../sudoku/killer.html" class="play-now">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card" data-tags="sudoku,variant,medium">
+                        <div class="game-thumb" style="background-image: url('../../assets/images/sudoku-x.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Sudoku X</div>
+                            <div class="game-description">Classic Sudoku with additional constraints on the diagonals.</div>
+                            <a href="../sudoku/sudoku-x.html" class="play-now">Play Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card" data-tags="sudoku,classic,easy">
+                        <div class="game-thumb" style="background-image: url('../../assets/images/sudoku-mini.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title">Mini Sudoku</div>
+                            <div class="game-description">A smaller 6x6 Sudoku puzzle, perfect for quick sessions.</div>
+                            <a href="../sudoku/mini.html" class="play-now">Play Now</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>About GameZone</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="../../categories/sudoku.html">Sudoku</a></li>
+                    <li><a href="../../categories/memory.html">Memory</a></li>
+                    <li><a href="../../categories/cards.html">Card Games</a></li>
+                    <li><a href="../../categories/mahjong.html">Mahjong</a></li>
+                    <li><a href="../../categories/fortune.html">Fortune Telling</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Game Submission</a></li>
+                    <li><a href="#">Report an Issue</a></li>
+                    <li><a href="#">Developers</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                &copy; 2023 GameZone. All rights reserved. All games on this website are the property of their respective owners.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <script>
+        // Game variables
+        let selectedCell = null;
+        let gameBoard = [];
+        let solution = [];
+        let givenCells = [];
+        let difficulty = 'medium';
+        let timerInterval = null;
+        let startTime = null;
+        let hintCount = 3;
+        
+        // DOM elements
+        const board = document.getElementById('sudoku-board');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const numberBtns = document.querySelectorAll('.number-btn');
+        const newGameBtn = document.getElementById('new-game-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const solveBtn = document.getElementById('solve-btn');
+        const timerElement = document.querySelector('.timer');
+        const messageElement = document.getElementById('message');
+        
+        // Initialize game
+        function initializeGame() {
+            createBoard();
+            generateNewGame();
+            setupEventListeners();
+            startTimer();
+        }
+        
+        // Create the Sudoku board cells
+        function createBoard() {
+            board.innerHTML = '';
+            for (let i = 0; i < 81; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                board.appendChild(cell);
+            }
+        }
+        
+        // Generate a new Sudoku game
+        function generateNewGame() {
+            // Reset variables
+            selectedCell = null;
+            gameBoard = Array(81).fill(0);
+            solution = generateSolution();
+            
+            // Determine how many cells to remove based on difficulty
+            let cellsToRemove;
+            switch (difficulty) {
+                case 'easy':
+                    cellsToRemove = 40; // 41 given cells
+                    break;
+                case 'medium':
+                    cellsToRemove = 50; // 31 given cells
+                    break;
+                case 'hard':
+                    cellsToRemove = 60; // 21 given cells
+                    break;
+                default:
+                    cellsToRemove = 50;
+            }
+            
+            // Create a copy of the solution for the game board
+            gameBoard = [...solution];
+            
+            // Remove cells
+            givenCells = [];
+            const cellIndices = Array.from({length: 81}, (_, i) => i);
+            // Shuffle the indices to randomly select cells to remove
+            shuffleArray(cellIndices);
+            
+            for (let i = 0; i < cellsToRemove; i++) {
+                const index = cellIndices[i];
+                gameBoard[index] = 0;
+            }
+            
+            // Mark remaining cells as "given"
+            for (let i = 0; i < 81; i++) {
+                if (gameBoard[i] !== 0) {
+                    givenCells.push(i);
+                }
+            }
+            
+            updateBoard();
+            resetTimer();
+            startTimer();
+            updateHintButton();
+            showMessage('New game started. Good luck!');
+        }
+        
+        // Generate a solved Sudoku board
+        function generateSolution() {
+            // Create an empty board
+            const board = Array(81).fill(0);
+            
+            // Try to solve it (this will generate a random solution)
+            if (solveSudoku(board)) {
+                return board;
+            }
+            
+            // If we can't solve it (shouldn't happen), return a pre-defined board
+            console.error('Could not generate a valid Sudoku board');
+            return [
+                5, 3, 4, 6, 7, 8, 9, 1, 2,
+                6, 7, 2, 1, 9, 5, 3, 4, 8,
+                1, 9, 8, 3, 4, 2, 5, 6, 7,
+                8, 5, 9, 7, 6, 1, 4, 2, 3,
+                4, 2, 6, 8, 5, 3, 7, 9, 1,
+                7, 1, 3, 9, 2, 4, 8, 5, 6,
+                9, 6, 1, 5, 3, 7, 2, 8, 4,
+                2, 8, 7, 4, 1, 9, 6, 3, 5,
+                3, 4, 5, 2, 8, 6, 1, 7, 9
+            ];
+        }
+        
+        // Solve a Sudoku board using backtracking
+        function solveSudoku(board) {
+            const emptyCell = findEmptyCell(board);
+            
+            // If there are no empty cells, the board is solved
+            if (!emptyCell) return true;
+            
+            const [row, col] = emptyCell;
+            const index = row * 9 + col;
+            
+            // Try numbers 1-9
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            shuffleArray(numbers); // Randomize to get different solutions
+            
+            for (const num of numbers) {
+                if (isValidPlacement(board, row, col, num)) {
+                    board[index] = num;
+                    
+                    if (solveSudoku(board)) {
+                        return true;
+                    }
+                    
+                    // If this doesn't lead to a solution, backtrack
+                    board[index] = 0;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Find an empty cell in the board
+        function findEmptyCell(board) {
+            for (let i = 0; i < 81; i++) {
+                if (board[i] === 0) {
+                    const row = Math.floor(i / 9);
+                    const col = i % 9;
+                    return [row, col];
+                }
+            }
+            return null;
+        }
+        
+        // Check if a number is valid in a given position
+        function isValidPlacement(board, row, col, num) {
+            // Check row
+            for (let i = 0; i < 9; i++) {
+                if (board[row * 9 + i] === num) {
+                    return false;
+                }
+            }
+            
+            // Check column
+            for (let i = 0; i < 9; i++) {
+                if (board[i * 9 + col] === num) {
+                    return false;
+                }
+            }
+            
+            // Check 3x3 box
+            const boxRow = Math.floor(row / 3) * 3;
+            const boxCol = Math.floor(col / 3) * 3;
+            
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (board[(boxRow + i) * 9 + (boxCol + j)] === num) {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+        
+        // Update the visual board based on the game board array
+        function updateBoard() {
+            const cells = document.querySelectorAll('.cell');
+            
+            cells.forEach((cell, index) => {
+                // Clear all classes except 'cell'
+                cell.classList.remove('selected', 'given', 'filled', 'error');
+                
+                // Set the cell content
+                const value = gameBoard[index];
+                cell.textContent = value !== 0 ? value : '';
+                
+                // Add appropriate classes
+                if (givenCells.includes(index)) {
+                    cell.classList.add('given');
+                } else if (value !== 0) {
+                    cell.classList.add('filled');
+                    
+                    // Check if the value is correct according to the solution
+                    if (value !== solution[index]) {
+                        cell.classList.add('error');
+                    }
+                }
+                
+                // Mark selected cell
+                if (index === selectedCell) {
+                    cell.classList.add('selected');
+                }
+            });
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Cell click event
+            board.addEventListener('click', (e) => {
+                if (e.target.classList.contains('cell')) {
+                    const index = parseInt(e.target.dataset.index);
+                    
+                    // Don't allow selecting given cells
+                    if (!givenCells.includes(index)) {
+                        selectedCell = index;
+                        updateBoard();
+                    }
+                }
+            });
+            
+            // Number button clicks
+            numberBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (selectedCell !== null) {
+                        const number = parseInt(btn.dataset.number);
+                        
+                        // If it's the clear button (0), set to 0
+                        gameBoard[selectedCell] = number;
+                        updateBoard();
+                        checkCompletion();
+                    }
+                });
+            });
+            
+            // Difficulty buttons
+            difficultyBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    difficulty = btn.dataset.difficulty;
+                    generateNewGame();
+                });
+            });
+            
+            // New game button
+            newGameBtn.addEventListener('click', generateNewGame);
+            
+            // Hint button
+            hintBtn.addEventListener('click', giveHint);
+            
+            // Solve button
+            solveBtn.addEventListener('click', solveGame);
+            
+            // Keyboard input for numbers 1-9
+            document.addEventListener('keydown', (e) => {
+                if (selectedCell !== null) {
+                    if (e.key >= '1' && e.key <= '9') {
+                        gameBoard[selectedCell] = parseInt(e.key);
+                        updateBoard();
+                        checkCompletion();
+                    } else if (e.key === '0' || e.key === 'Backspace' || e.key === 'Delete') {
+                        gameBoard[selectedCell] = 0;
+                        updateBoard();
+                    }
+                }
+            });
+        }
+        
+        // Check if the game is complete and correct
+        function checkCompletion() {
+            // Check if all cells are filled
+            if (gameBoard.includes(0)) return;
+            
+            // Check if all cells are correctly filled
+            for (let i = 0; i < 81; i++) {
+                if (gameBoard[i] !== solution[i]) {
+                    showMessage('There are errors in your solution. Keep trying!', 'error');
+                    return;
+                }
+            }
+            
+            // If we get here, the game is complete and correct
+            stopTimer();
+            showMessage('Congratulations! You solved the puzzle!', 'success');
+        }
+        
+        // Give a hint by revealing a cell
+        function giveHint() {
+            if (hintCount <= 0) {
+                showMessage('No more hints available!', 'error');
+                return;
+            }
+            
+            // Find an incorrect or empty cell
+            const emptyCells = [];
+            for (let i = 0; i < 81; i++) {
+                if (gameBoard[i] === 0 || gameBoard[i] !== solution[i]) {
+                    if (!givenCells.includes(i)) {
+                        emptyCells.push(i);
+                    }
+                }
+            }
+            
+            if (emptyCells.length === 0) {
+                showMessage('No cells need hints!', 'error');
+                return;
+            }
+            
+            // Randomly select one of the cells
+            const randomIndex = Math.floor(Math.random() * emptyCells.length);
+            const cellIndex = emptyCells[randomIndex];
+            
+            // Fill it with the correct value
+            gameBoard[cellIndex] = solution[cellIndex];
+            selectedCell = cellIndex;
+            
+            // Decrement hint count
+            hintCount--;
+            updateHintButton();
+            
+            // Update the board
+            updateBoard();
+            showMessage('Hint used!');
+            
+            // Check if the game is complete
+            checkCompletion();
+        }
+        
+        // Update the hint button text
+        function updateHintButton() {
+            hintBtn.textContent = `Hint (${hintCount})`;
+            hintBtn.disabled = hintCount <= 0;
+        }
+        
+        // Solve the entire game
+        function solveGame() {
+            if (confirm('Are you sure you want to see the solution?')) {
+                gameBoard = [...solution];
+                updateBoard();
+                stopTimer();
+                showMessage('Puzzle solved!');
+            }
+        }
+        
+        // Timer functions
+        function startTimer() {
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+        
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+        
+        function resetTimer() {
+            stopTimer();
+            timerElement.textContent = '00:00';
+        }
+        
+        function updateTimer() {
+            const now = new Date();
+            const elapsed = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            timerElement.textContent = `${minutes}:${seconds}`;
+        }
+        
+        // Helper function to show messages
+        function showMessage(text, type = '') {
+            messageElement.textContent = text;
+            messageElement.className = 'message show';
+            
+            if (type === 'success') {
+                messageElement.classList.add('success-message');
+            } else if (type === 'error') {
+                messageElement.classList.add('error-message');
+            }
+            
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Helper function to shuffle an array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // Initialize the game when the page loads
+        window.addEventListener('load', initializeGame);
+    </script>
+</body>
+</html> 

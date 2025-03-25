@@ -1,0 +1,3 @@
+# HTMLGames ads.txt entries
+google.com, pub-6893876361346206, DIRECT, f08c47fec0942fa0
+google.com, pub-5856405356319576, DIRECT, f08c47fec0942fa0 

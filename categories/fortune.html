@@ -13,8 +13,17 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortune Telling Games - GameZone</title>
-    <meta name="description" content="Discover your future with our collection of fortune telling games. Try Tarot readings, crystal ball predictions, and more mystical experiences online.">
+    <title>Fortune Telling Games - GameZone | ilovethisgame.cc</title>
+    <meta name="description" content="Explore your future with our collection of fortune telling games. Try tarot readings, crystal ball predictions, and more for entertainment purposes.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ilovethisgame.cc/categories/fortune.html">
+    <meta property="og:title" content="Fortune Telling Games - GameZone | ilovethisgame.cc">
+    <meta property="og:description" content="Explore your future with our collection of fortune telling games. Try tarot readings, crystal ball predictions, and more for entertainment purposes.">
+    <meta property="og:url" content="https://ilovethisgame.cc/categories/fortune.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ilovethisgame.cc/assets/images/tarot.jpg">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
@@ -168,36 +177,61 @@
     </header>
     
     <!-- Main Content -->
-    <main>
+    <main itemscope itemtype="http://schema.org/CollectionPage">
         <div class="container">
             <!-- Hero Section -->
             <section class="hero">
-                <h1>Fortune Telling Games</h1>
-                <p>Discover insights into your past, present, and future with our mystical fortune telling games</p>
+                <h1 itemprop="name">Fortune Telling Games</h1>
+                <p itemprop="description">Explore your future with our fortune telling games</p>
             </section>
             
             <!-- Fortune Telling Games Section -->
             <section class="featured-games">
                 <h2 class="section-title">Popular Fortune Telling Games</h2>
-                <div class="game-grid">
+                <div class="game-grid" itemscope itemtype="http://schema.org/ItemList">
+                    <meta itemprop="itemListOrder" content="Unordered" />
                     <!-- Tarot Reading -->
-                    <div class="game-card" data-tags="fortune,tarot">
+                    <div class="game-card" data-tags="fortune,tarot" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="1" />
                         <div class="game-thumb" style="background-image: url('../assets/images/tarot.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Tarot Reading</div>
+                            <div class="game-title" itemprop="name">Tarot Reading</div>
+                            <meta itemprop="description" content="Get insights into your past, present, and future with a virtual tarot card reading." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/fortune/tarot.html', 'Tarot Reading')">Play</a>
+                        <a href="../games/fortune/tarot.html" class="play-now" itemprop="url" title="Play Tarot Reading">Play</a>
                     </div>
                     
                     <!-- Crystal Ball -->
-                    <div class="game-card" data-tags="fortune,crystal">
+                    <div class="game-card" data-tags="fortune,crystal" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="2" />
                         <div class="game-thumb" style="background-image: url('../assets/images/crystal-ball.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Crystal Ball</div>
+                            <div class="game-title" itemprop="name">Crystal Ball</div>
+                            <meta itemprop="description" content="Ask a question and receive a mystical answer from the crystal ball." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/fortune/crystal-ball.html', 'Crystal Ball')">Play</a>
+                        <a href="../games/fortune/crystal-ball.html" class="play-now" itemprop="url" title="Play Crystal Ball">Play</a>
+                    </div>
+                    
+                    <!-- Zodiac Compatibility -->
+                    <div class="game-card" data-tags="fortune,zodiac" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="3" />
+                        <div class="game-thumb" style="background-image: url('../assets/images/zodiac.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title" itemprop="name">Zodiac Compatibility</div>
+                            <meta itemprop="description" content="Discover your compatibility with others based on astrological signs." />
+                        </div>
+                        <a href="../games/fortune/zodiac.html" class="play-now" itemprop="url" title="Play Zodiac Compatibility">Play</a>
                     </div>
                 </div>
+            </section>
+            
+            <!-- Additional content for SEO -->
+            <section class="fortune-info">
+                <h2>About Fortune Telling Games</h2>
+                <p>Fortune telling has been practiced in various forms throughout human history, with roots in ancient civilizations across the world. While historically these practices were taken quite seriously, our fortune telling games are designed primarily for entertainment purposes.</p>
+                <p>Our collection includes popular divination methods such as tarot card readings, crystal ball predictions, and zodiac compatibility assessments. Each experience is designed to be immersive and thought-provoking, while maintaining an atmosphere of fun.</p>
+                <p>Tarot readings involve drawing cards from a virtual deck, with each card representing different aspects of life or personality traits. The crystal ball game allows you to ask questions and receive mystical answers that might provide insight or simply amusement. Our zodiac compatibility tool examines how different astrological signs interact with each other.</p>
+                <p>Please remember that these games are meant for entertainment only. Life decisions should be made based on careful consideration and practical wisdom rather than digital fortune telling games. Enjoy the experience with an open mind and have fun exploring the mystical side of life!</p>
             </section>
         </div>
     </main>
@@ -243,5 +277,20 @@
     
     <!-- JavaScript -->
     <script src="../js/main.js"></script>
+    <script>
+    // Convert onclick handlers to direct links
+    document.addEventListener('DOMContentLoaded', function() {
+        const playButtons = document.querySelectorAll('.play-now');
+        playButtons.forEach(button => {
+            if (button.getAttribute('onclick')) {
+                const url = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const title = button.getAttribute('onclick').match(/, '([^']+)'/)[1];
+                button.removeAttribute('onclick');
+                button.setAttribute('href', url);
+                button.setAttribute('title', 'Play ' + title);
+            }
+        });
+    });
+    </script>
 </body>
 </html> 

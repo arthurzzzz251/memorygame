@@ -13,8 +13,17 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameZone - Free Online Games</title>
+    <title>ilovethisgame - Free Online Games | ilovethisgame.cc</title>
     <meta name="description" content="Play free online games including Sudoku, Memory, Card Games, Mahjong, and more. No downloads required, play directly in your browser.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ilovethisgame.cc/">
+    <meta property="og:title" content="ilovethisgame - Free Online Games | ilovethisgame.cc">
+    <meta property="og:description" content="Play free online games including Sudoku, Memory, Card Games, Mahjong, and more. No downloads required.">
+    <meta property="og:url" content="https://ilovethisgame.cc/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ilovethisgame.cc/assets/images/dark-mahjong-connect.jpg">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
@@ -22,13 +31,18 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     
+    <!-- Google Fonts - 游戏风格字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     
     <style>
         :root {
-            /* 更新颜色变量 */
+            /* Color variables */
             --primary-color: #ff4655;
             --secondary-color: #0f1923;
             --background-color: #111111;
@@ -38,11 +52,30 @@
             --card-background: #222222;
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             --accent-color: #ff4655;
+            --game-yellow: #FFD700; /* 金黄色 */
         }
         
         body {
             background-color: var(--background-color);
             color: var(--text-color);
+        }
+        
+        /* 游戏标志字体样式 */
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--game-yellow);
+            text-decoration: none;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* 页脚标题颜色 */
+        .footer-section h3 {
+            color: var(--game-yellow);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
         }
         
         /* 游戏卡片样式优化 */
@@ -51,6 +84,7 @@
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 30px;
+            padding-top: 30px; /* 增加顶部间距 */
         }
         
         .game-card {
@@ -120,37 +154,12 @@
             background: rgba(0, 0, 0, 0.5);
         }
         
-        /* 简化的英雄区域 */
+        /* 删除不必要的样式 */
         .hero {
-            background: linear-gradient(135deg, var(--primary-color), #9900ff);
-            padding: 20px 0;
-            text-align: center;
-            margin-bottom: 30px;
-            border-radius: 0;
+            display: none;
         }
         
-        .hero h1 {
-            color: var(--light-text);
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .btn {
-            background-color: white;
-            color: var(--primary-color);
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        
-        /* 段落标题 */
         .section-title {
-            color: var(--light-text);
-            font-size: 1.8rem;
-            margin: 20px 0;
-        }
-        
-        /* 隐藏一些不必要的元素 */
-        .section-title::after {
             display: none;
         }
     </style>
@@ -159,7 +168,7 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <a href="index.html" class="logo">GameZone</a>
+            <a href="index.html" class="logo">ilovethisgame</a>
             
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -188,170 +197,168 @@
     </header>
     
     <!-- Main Content -->
-    <main>
+    <main itemscope itemtype="http://schema.org/WebPage">
         <div class="container">
-            <!-- Hero区域 -->
-            <section class="hero">
-                <h1>Free Online Games</h1>
-                <a href="#games" class="btn">PLAY NOW</a>
-            </section>
+            <!-- 已删除 Hero Section -->
             
-            <!-- 热门游戏 -->
-            <section id="games" class="featured-games">
-                <h2 class="section-title">Popular Games</h2>
+            <!-- 游戏列表 - 已删除标题 -->
+            <section id="games" class="featured-games" itemscope itemtype="http://schema.org/ItemList">
+                <meta itemprop="itemListOrder" content="Unordered" />
                 <div class="game-grid">
-                    <!-- Dark Mahjong Connect游戏 -->
-                    <div class="game-card" data-tags="mahjong,connect,dark">
+                    <!-- Dark Mahjong Connect -->
+                    <div class="game-card" data-tags="mahjong,connect,dark" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="1" />
                         <div class="game-thumb" style="background-image: url('assets/images/dark-mahjong-connect.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Dark Mahjong Connect</div>
+                            <div class="game-title" itemprop="name">Dark Mahjong Connect</div>
+                            <meta itemprop="description" content="A challenging Mahjong game with dark theme and connect-style gameplay." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/mahjong/dark-connect.html', 'Dark Mahjong Connect')">Play</a>
+                        <a href="games/mahjong/dark-connect.html" class="play-now" itemprop="url" title="Play Dark Mahjong Connect">Play</a>
                     </div>
                     
-                    <!-- Hello Kitty游戏 -->
-                    <div class="game-card" data-tags="memory,kids,activity">
+                    <!-- Hello Kitty -->
+                    <div class="game-card" data-tags="memory,kids,activity" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="2" />
                         <div class="game-thumb" style="background-image: url('assets/images/hello-kitty-activity.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Hello Kitty - Activity Book</div>
+                            <div class="game-title" itemprop="name">Hello Kitty - Activity Book</div>
+                            <meta itemprop="description" content="A fun activity book featuring Hello Kitty with various memory games and activities." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/hello-kitty-activity.html', 'Hello Kitty - Activity Book')">Play</a>
+                        <a href="games/memory/hello-kitty-activity.html" class="play-now" itemprop="url" title="Play Hello Kitty Activity Book">Play</a>
                     </div>
                     
-                    <!-- 新添加的CrazyGames数独游戏 -->
-                    <div class="game-card" data-tags="sudoku,logic">
+                    <!-- Sudoku from CrazyGames -->
+                    <div class="game-card" data-tags="sudoku,logic" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="3" />
                         <div class="game-thumb" style="background-image: url('assets/images/sudoku-crazygames.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Sudoku Online</div>
+                            <div class="game-title" itemprop="name">Sudoku Online</div>
+                            <meta itemprop="description" content="Online Sudoku puzzles with multiple difficulty levels to test your logic skills." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/sudoku/crazygames-sudoku.html', 'Sudoku Online')">Play</a>
+                        <a href="games/sudoku/crazygames-sudoku.html" class="play-now" itemprop="url" title="Play Sudoku Online">Play</a>
                     </div>
                     
-                    <!-- 数独游戏 -->
-                    <div class="game-card" data-tags="sudoku,logic">
+                    <!-- Classic Sudoku -->
+                    <div class="game-card" data-tags="sudoku,logic" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="4" />
                         <div class="game-thumb" style="background-image: url('assets/images/sudoku-classic.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Classic Sudoku</div>
+                            <div class="game-title" itemprop="name">Classic Sudoku</div>
+                            <meta itemprop="description" content="The traditional 9x9 Sudoku puzzle with multiple difficulty levels." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/sudoku/classic-game.html', 'Classic Sudoku')">Play</a>
+                        <a href="games/sudoku/classic.html" class="play-now" itemprop="url" title="Play Classic Sudoku">Play</a>
                     </div>
                     
-                    <!-- 2048游戏 -->
-                    <div class="game-card" data-tags="puzzle,logic">
+                    <!-- 2048 Game -->
+                    <div class="game-card" data-tags="puzzle,logic" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="5" />
                         <div class="game-thumb" style="background-image: url('assets/images/2048.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">2048</div>
+                            <div class="game-title" itemprop="name">2048</div>
+                            <meta itemprop="description" content="Combine tiles with the same number to reach 2048 in this addictive puzzle game." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/puzzle/2048.html', '2048')">Play</a>
+                        <a href="games/puzzle/2048.html" class="play-now" itemprop="url" title="Play 2048">Play</a>
                     </div>
                     
-                    <!-- 记忆翻牌游戏 -->
-                    <div class="game-card" data-tags="memory,kids">
+                    <!-- Memory Card Game -->
+                    <div class="game-card" data-tags="memory,kids" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="6" />
                         <div class="game-thumb" style="background-image: url('assets/images/memory-card.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Memory Card</div>
+                            <div class="game-title" itemprop="name">Memory Card</div>
+                            <meta itemprop="description" content="A classic memory card game where you need to match pairs of cards." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/flip-card.html', 'Memory Card')">Play</a>
+                        <a href="games/memory/flip-card.html" class="play-now" itemprop="url" title="Play Memory Card">Play</a>
                     </div>
                     
-                    <!-- 纸牌接龙游戏 -->
-                    <div class="game-card" data-tags="cards,classic">
+                    <!-- Solitaire -->
+                    <div class="game-card" data-tags="cards,classic" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="7" />
                         <div class="game-thumb" style="background-image: url('assets/images/solitaire.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Solitaire</div>
+                            <div class="game-title" itemprop="name">Solitaire</div>
+                            <meta itemprop="description" content="A classic card game where you need to move all cards to the foundation piles." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/card/solitaire.html', 'Solitaire')">Play</a>
+                        <a href="games/card/solitaire.html" class="play-now" itemprop="url" title="Play Solitaire">Play</a>
                     </div>
                     
-                    <!-- 麻将连连看游戏 -->
-                    <div class="game-card" data-tags="mahjong,connect">
+                    <!-- Mahjong Connect -->
+                    <div class="game-card" data-tags="mahjong,connect" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="8" />
                         <div class="game-thumb" style="background-image: url('assets/images/mahjong-connect.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Mahjong Connect</div>
+                            <div class="game-title" itemprop="name">Mahjong Connect</div>
+                            <meta itemprop="description" content="A Mahjong game where you need to connect tiles to clear the board." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/mahjong/connect.html', 'Mahjong Connect')">Play</a>
+                        <a href="games/mahjong/connect.html" class="play-now" itemprop="url" title="Play Mahjong Connect">Play</a>
                     </div>
                     
-                    <!-- 塔罗占卜游戏 -->
-                    <div class="game-card" data-tags="fortune,tarot">
+                    <!-- Tarot Reading -->
+                    <div class="game-card" data-tags="fortune,tarot" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="9" />
                         <div class="game-thumb" style="background-image: url('assets/images/tarot.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Tarot Reading</div>
+                            <div class="game-title" itemprop="name">Tarot Reading</div>
+                            <meta itemprop="description" content="A tarot card reading game where you draw cards and interpret their meanings." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/fortune/tarot.html', 'Tarot Reading')">Play</a>
+                        <a href="games/fortune/tarot.html" class="play-now" itemprop="url" title="Play Tarot Reading">Play</a>
                     </div>
                     
-                    <!-- 记忆游戏 -->
-                    <div class="game-card" data-tags="memory,animals">
+                    <!-- Animal Memory -->
+                    <div class="game-card" data-tags="memory,animals" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="10" />
                         <div class="game-thumb" style="background-image: url('assets/images/memory-animals.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Animal Memory</div>
+                            <div class="game-title" itemprop="name">Animal Memory</div>
+                            <meta itemprop="description" content="A memory game where you need to remember the positions of animals." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/animals.html', 'Animal Memory')">Play</a>
+                        <a href="games/memory/animals.html" class="play-now" itemprop="url" title="Play Animal Memory">Play</a>
                     </div>
                     
-                    <!-- 数独变种 -->
-                    <div class="game-card" data-tags="sudoku,killer">
+                    <!-- Killer Sudoku -->
+                    <div class="game-card" data-tags="sudoku,killer" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="11" />
                         <div class="game-thumb" style="background-image: url('assets/images/sudoku-killer.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Killer Sudoku</div>
+                            <div class="game-title" itemprop="name">Killer Sudoku</div>
+                            <meta itemprop="description" content="A Sudoku game where you need to fill in the grid while adhering to the Killer Sudoku rules." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/sudoku/killer.html', 'Killer Sudoku')">Play</a>
+                        <a href="games/sudoku/killer.html" class="play-now" itemprop="url" title="Play Killer Sudoku">Play</a>
                     </div>
                     
-                    <!-- 纸牌游戏 -->
-                    <div class="game-card" data-tags="cards,spider">
+                    <!-- Spider Solitaire -->
+                    <div class="game-card" data-tags="cards,spider" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="12" />
                         <div class="game-thumb" style="background-image: url('assets/images/spider-solitaire.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Spider Solitaire</div>
+                            <div class="game-title" itemprop="name">Spider Solitaire</div>
+                            <meta itemprop="description" content="A spider solitaire game where you need to move all cards to the foundation piles." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/cards/spider.html', 'Spider Solitaire')">Play</a>
+                        <a href="games/card/spider.html" class="play-now" itemprop="url" title="Play Spider Solitaire">Play</a>
                     </div>
                     
-                    <!-- 记忆游戏 -->
-                    <div class="game-card" data-tags="memory,numbers">
+                    <!-- Number Memory -->
+                    <div class="game-card" data-tags="memory,numbers" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="13" />
                         <div class="game-thumb" style="background-image: url('assets/images/memory-numbers.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Number Memory</div>
+                            <div class="game-title" itemprop="name">Number Memory</div>
+                            <meta itemprop="description" content="A memory game where you need to remember the positions of numbers." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/memory/numbers.html', 'Number Memory')">Play</a>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- 新游戏 -->
-            <section class="new-games">
-                <h2 class="section-title">New Games</h2>
-                <div class="game-grid">
-                    <!-- 麻将游戏 -->
-                    <div class="game-card" data-tags="mahjong,dynasty">
-                        <div class="game-thumb" style="background-image: url('assets/images/mahjong-dynasty.jpg');"></div>
-                        <div class="game-info">
-                            <div class="game-title">Dynasty Mahjong</div>
-                        </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/mahjong/dynasty.html', 'Mahjong Dynasty')">Play</a>
-                    </div>
-                    
-                    <!-- 占卜游戏 -->
-                    <div class="game-card" data-tags="fortune,crystal">
-                        <div class="game-thumb" style="background-image: url('assets/images/crystal-ball.jpg');"></div>
-                        <div class="game-info">
-                            <div class="game-title">Crystal Ball</div>
-                        </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('games/fortune/crystal-ball.html', 'Crystal Ball')">Play</a>
+                        <a href="games/memory/numbers.html" class="play-now" itemprop="url" title="Play Number Memory">Play</a>
                     </div>
                 </div>
             </section>
         </div>
     </main>
     
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer>
         <div class="container footer-container">
             <div class="footer-section">
                 <h3>About Us</h3>
                 <ul>
-                    <li><a href="#">About GameZone</a></li>
+                    <li><a href="#">About ilovethisgame</a></li>
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
@@ -379,12 +386,27 @@
         
         <div class="container">
             <div class="copyright">
-                &copy; 2023 GameZone. All Rights Reserved.
+                &copy; 2023 ilovethisgame. All Rights Reserved.
             </div>
         </div>
     </footer>
     
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script>
+    // Convert onclick handlers to direct links
+    document.addEventListener('DOMContentLoaded', function() {
+        const playButtons = document.querySelectorAll('.play-now');
+        playButtons.forEach(button => {
+            if (button.getAttribute('onclick')) {
+                const url = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const title = button.getAttribute('onclick').match(/, '([^']+)'/)[1];
+                button.removeAttribute('onclick');
+                button.setAttribute('href', url);
+                button.setAttribute('title', 'Play ' + title);
+            }
+        });
+    });
+    </script>
 </body>
 </html> 

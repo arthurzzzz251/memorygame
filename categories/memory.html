@@ -13,8 +13,17 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Games - GameZone</title>
+    <title>Memory Games - GameZone | ilovethisgame.cc</title>
     <meta name="description" content="Play free memory games online. Test and improve your memory skills with our collection of memory card games and brain training activities.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ilovethisgame.cc/categories/memory.html">
+    <meta property="og:title" content="Memory Games - GameZone | ilovethisgame.cc">
+    <meta property="og:description" content="Play free memory games online. Test and improve your memory skills with our collection of memory card games and brain training activities.">
+    <meta property="og:url" content="https://ilovethisgame.cc/categories/memory.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ilovethisgame.cc/assets/images/memory-card.jpg">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
@@ -168,54 +177,72 @@
     </header>
     
     <!-- Main Content -->
-    <main>
+    <main itemscope itemtype="http://schema.org/CollectionPage">
         <div class="container">
             <!-- Hero Section -->
             <section class="hero">
-                <h1>Memory Games</h1>
-                <p>Test your memory and concentration with our collection of memory games</p>
+                <h1 itemprop="name">Memory Games</h1>
+                <p itemprop="description">Test your memory and concentration with our collection of memory games</p>
             </section>
             
             <!-- Memory Games Section -->
             <section class="featured-games">
                 <h2 class="section-title">Popular Memory Games</h2>
-                <div class="game-grid">
+                <div class="game-grid" itemscope itemtype="http://schema.org/ItemList">
+                    <meta itemprop="itemListOrder" content="Unordered" />
                     <!-- Hello Kitty - Activity Book -->
-                    <div class="game-card" data-tags="memory,kids,activity,hello kitty">
+                    <div class="game-card" data-tags="memory,kids,activity,hello kitty" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="1" />
                         <div class="game-thumb" style="background-image: url('../assets/images/hello-kitty-activity.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Hello Kitty - Activity Book</div>
+                            <div class="game-title" itemprop="name">Hello Kitty - Activity Book</div>
+                            <meta itemprop="description" content="A fun activity book featuring Hello Kitty with various memory games and activities." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/memory/hello-kitty-activity.html', 'Hello Kitty - Activity Book')">Play</a>
+                        <a href="../games/memory/hello-kitty-activity.html" class="play-now" itemprop="url" title="Play Hello Kitty Activity Book">Play</a>
                     </div>
                     
                     <!-- Memory Card Game -->
-                    <div class="game-card" data-tags="memory,kids">
+                    <div class="game-card" data-tags="memory,kids" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="2" />
                         <div class="game-thumb" style="background-image: url('../assets/images/memory-card.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Memory Card</div>
+                            <div class="game-title" itemprop="name">Memory Card</div>
+                            <meta itemprop="description" content="A classic memory card game where you need to match pairs of cards." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/memory/flip-card.html', 'Memory Card')">Play</a>
+                        <a href="../games/memory/flip-card.html" class="play-now" itemprop="url" title="Play Memory Card">Play</a>
                     </div>
                     
                     <!-- Animal Memory -->
-                    <div class="game-card" data-tags="memory,animals">
+                    <div class="game-card" data-tags="memory,animals" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="3" />
                         <div class="game-thumb" style="background-image: url('../assets/images/memory-animals.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Animal Memory</div>
+                            <div class="game-title" itemprop="name">Animal Memory</div>
+                            <meta itemprop="description" content="A memory game featuring cute animals. Match pairs to clear the board." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/memory/animals.html', 'Animal Memory')">Play</a>
+                        <a href="../games/memory/animals.html" class="play-now" itemprop="url" title="Play Animal Memory">Play</a>
                     </div>
                     
                     <!-- Number Memory -->
-                    <div class="game-card" data-tags="memory,numbers">
+                    <div class="game-card" data-tags="memory,numbers" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="4" />
                         <div class="game-thumb" style="background-image: url('../assets/images/memory-numbers.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Number Memory</div>
+                            <div class="game-title" itemprop="name">Number Memory</div>
+                            <meta itemprop="description" content="Test your ability to remember sequences of numbers in this challenging memory game." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/memory/numbers.html', 'Number Memory')">Play</a>
+                        <a href="../games/memory/numbers.html" class="play-now" itemprop="url" title="Play Number Memory">Play</a>
                     </div>
                 </div>
+            </section>
+            
+            <!-- Additional content for SEO -->
+            <section class="memory-info">
+                <h2>About Memory Games</h2>
+                <p>Memory games are fun and engaging activities that challenge your recall abilities and help improve cognitive function. These games come in various forms, from classic card-matching games to more complex sequence-based challenges.</p>
+                <p>Playing memory games regularly has been shown to provide several benefits, including improved concentration, better attention to detail, enhanced visual recognition, and stronger short-term memory. They're great for people of all ages, from young children developing their cognitive skills to older adults maintaining mental sharpness.</p>
+                <p>Our collection of memory games offers a variety of themes and difficulty levels. Whether you're looking for cute animal graphics for kids, challenging number sequences for adults, or themed memory games like our Hello Kitty Activity Book, you'll find something enjoyable that also gives your brain a workout.</p>
+                <p>All games can be played directly in your browser with no downloads required. Take a break and challenge yourself with these fun and beneficial memory games!</p>
             </section>
         </div>
     </main>
@@ -261,5 +288,20 @@
     
     <!-- JavaScript -->
     <script src="../js/main.js"></script>
+    <script>
+    // Convert onclick handlers to direct links
+    document.addEventListener('DOMContentLoaded', function() {
+        const playButtons = document.querySelectorAll('.play-now');
+        playButtons.forEach(button => {
+            if (button.getAttribute('onclick')) {
+                const url = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const title = button.getAttribute('onclick').match(/, '([^']+)'/)[1];
+                button.removeAttribute('onclick');
+                button.setAttribute('href', url);
+                button.setAttribute('title', 'Play ' + title);
+            }
+        });
+    });
+    </script>
 </body>
 </html> 

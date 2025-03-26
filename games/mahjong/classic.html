@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HN64WQ5WSL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HN64WQ5WSL');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahjong Connect</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .game-container {
+            width: 95%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .game-title {
+            font-size: 2rem;
+            color: #f8f8f8;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .stat {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .board-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-gap: 5px;
+            margin: 0 auto;
+        }
+        
+        .tile {
+            aspect-ratio: 1/1;
+            background-color: #2a4d69;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .tile.selected {
+            background-color: #4b88a2;
+            box-shadow: 0 0 10px #fff;
+        }
+        
+        .tile.hidden {
+            visibility: hidden;
+        }
+        
+        .path {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 10;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #c0392b;
+        }
+        
+        #message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 100;
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #e74c3c;
+            width: 100%;
+            transition: width 1s linear;
+        }
+        
+        #level-indicator {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tile {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <div class="game-title">Mahjong Connect</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Pairs</div>
+                    <div class="stat-value"><span id="pairs-found">0</span>/<span id="total-pairs">18</span></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Time</div>
+                    <div class="stat-value" id="timer">01:30</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="level-indicator">Level 1</div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="time-progress"></div>
+        </div>
+        
+        <div class="board-container">
+            <div class="board" id="board"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="new-game">New Game</button>
+            <button id="hint">Hint</button>
+            <button id="shuffle">Shuffle</button>
+        </div>
+        
+        <div id="message"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game variables
+            const boardElement = document.getElementById('board');
+            const pairsFoundElement = document.getElementById('pairs-found');
+            const totalPairsElement = document.getElementById('total-pairs');
+            const timerElement = document.getElementById('timer');
+            const timeProgressElement = document.getElementById('time-progress');
+            const newGameButton = document.getElementById('new-game');
+            const hintButton = document.getElementById('hint');
+            const shuffleButton = document.getElementById('shuffle');
+            const messageElement = document.getElementById('message');
+            const levelIndicator = document.getElementById('level-indicator');
+            
+            let board = [];
+            let tiles = [];
+            let selectedTile = null;
+            let pairsFound = 0;
+            let totalPairs = 0;
+            let timeLeft = 90; // 1:30 in seconds
+            let timerInterval;
+            let level = 1;
+            let maxLevel = 5;
+            
+            // Mahjong tile symbols - simplified for this demo
+            const tileSymbols = [
+                '🀇', '🀈', '🀉', '🀊', '🀋', '🀌', '🀍', '🀎', '🀏',
+                '🀐', '🀑', '🀒', '🀓', '🀔', '🀕', '🀖', '🀗', '🀘',
+                '🀙', '🀚', '🀛', '🀜', '🀝', '🀞', '🀟', '🀠', '🀡',
+                '🀀', '🀁', '🀂', '🀃', '🀆', '🀅', '🀄'
+            ];
+            
+            // Initialize game
+            initGame();
+            
+            // Event listeners
+            newGameButton.addEventListener('click', initGame);
+            hintButton.addEventListener('click', showHint);
+            shuffleButton.addEventListener('click', shuffleTiles);
+            
+            // Function to initialize the game
+            function initGame() {
+                clearInterval(timerInterval);
+                
+                board = [];
+                tiles = [];
+                selectedTile = null;
+                pairsFound = 0;
+                
+                // Determine board size based on level
+                let rows, cols;
+                switch(level) {
+                    case 1: rows = 6; cols = 6; timeLeft = 90; break;
+                    case 2: rows = 7; cols = 6; timeLeft = 120; break;
+                    case 3: rows = 8; cols = 7; timeLeft = 150; break;
+                    case 4: rows = 8; cols = 8; timeLeft = 180; break;
+                    case 5: rows = 9; cols = 8; timeLeft = 210; break;
+                    default: rows = 6; cols = 6; timeLeft = 90;
+                }
+                
+                // Create an empty board
+                for (let i = 0; i < rows; i++) {
+                    board[i] = [];
+                    for (let j = 0; j < cols; j++) {
+                        board[i][j] = null;
+                    }
+                }
+                
+                // Create pairs of tiles
+                totalPairs = Math.floor((rows * cols) / 2);
+                const shuffledSymbols = [...tileSymbols].sort(() => Math.random() - 0.5);
+                const selectedSymbols = shuffledSymbols.slice(0, totalPairs);
+                
+                // Create array of all tile positions
+                let positions = [];
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        positions.push({row: i, col: j});
+                    }
+                }
+                
+                // Shuffle positions
+                positions = positions.sort(() => Math.random() - 0.5);
+                
+                // Place tile pairs on the board
+                for (let i = 0; i < totalPairs; i++) {
+                    const symbol = selectedSymbols[i];
+                    
+                    // Place first tile of the pair
+                    const pos1 = positions.pop();
+                    board[pos1.row][pos1.col] = {
+                        symbol: symbol,
+                        row: pos1.row,
+                        col: pos1.col,
+                        id: `tile-${pos1.row}-${pos1.col}`
+                    };
+                    
+                    // Place second tile of the pair
+                    const pos2 = positions.pop();
+                    board[pos2.row][pos2.col] = {
+                        symbol: symbol,
+                        row: pos2.row,
+                        col: pos2.col,
+                        id: `tile-${pos2.row}-${pos2.col}`
+                    };
+                }
+                
+                // Update UI
+                boardElement.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+                boardElement.innerHTML = '';
+                
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        const tile = board[i][j];
+                        const tileElement = document.createElement('div');
+                        tileElement.className = 'tile';
+                        tileElement.id = tile.id;
+                        tileElement.textContent = tile.symbol;
+                        tileElement.dataset.row = i;
+                        tileElement.dataset.col = j;
+                        
+                        tileElement.addEventListener('click', () => handleTileClick(tile));
+                        
+                        boardElement.appendChild(tileElement);
+                        tiles.push({element: tileElement, ...tile});
+                    }
+                }
+                
+                // Update UI elements
+                pairsFoundElement.textContent = pairsFound;
+                totalPairsElement.textContent = totalPairs;
+                levelIndicator.textContent = `Level ${level}`;
+                
+                // Start timer
+                updateTimer();
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+            
+            // Handle tile click
+            function handleTileClick(tile) {
+                if (!tile) return;
+                
+                const tileElement = document.getElementById(tile.id);
+                
+                // Ignore if tile is already hidden (matched)
+                if (tileElement.classList.contains('hidden')) return;
+                
+                // If no tile is selected, select this one
+                if (!selectedTile) {
+                    selectedTile = tile;
+                    tileElement.classList.add('selected');
+                    return;
+                }
+                
+                // If clicking the same tile, deselect it
+                if (selectedTile.id === tile.id) {
+                    tileElement.classList.remove('selected');
+                    selectedTile = null;
+                    return;
+                }
+                
+                // Check if tiles match
+                if (selectedTile.symbol === tile.symbol) {
+                    // Check if path exists
+                    if (pathExists(selectedTile, tile)) {
+                        // Match found!
+                        const selectedElement = document.getElementById(selectedTile.id);
+                        
+                        // Add visual effects
+                        selectedElement.classList.add('hidden');
+                        tileElement.classList.add('hidden');
+                        
+                        // Update game state
+                        pairsFound++;
+                        pairsFoundElement.textContent = pairsFound;
+                        
+                        // Clear selection
+                        selectedElement.classList.remove('selected');
+                        selectedTile = null;
+                        
+                        // Check if level completed
+                        if (pairsFound === totalPairs) {
+                            clearInterval(timerInterval);
+                            
+                            if (level < maxLevel) {
+                                level++;
+                                showMessage(`Level ${level-1} completed! Starting level ${level}...`);
+                                setTimeout(initGame, 2000);
+                            } else {
+                                showMessage('Congratulations! You have completed all levels!');
+                                level = 1;
+                            }
+                        }
+                    } else {
+                        // No valid path
+                        showMessage('No valid path between tiles!');
+                        
+                        // Deselect tiles
+                        document.getElementById(selectedTile.id).classList.remove('selected');
+                        selectedTile = null;
+                    }
+                } else {
+                    // No match
+                    document.getElementById(selectedTile.id).classList.remove('selected');
+                    selectedTile = null;
+                }
+            }
+            
+            // Function to check if a path exists between two tiles
+            function pathExists(tile1, tile2) {
+                // Check if tiles are in the same row or column (direct line)
+                if (tile1.row === tile2.row) {
+                    // Check horizontal path
+                    const minCol = Math.min(tile1.col, tile2.col);
+                    const maxCol = Math.max(tile1.col, tile2.col);
+                    
+                    // Check if path is clear
+                    for (let col = minCol + 1; col < maxCol; col++) {
+                        if (board[tile1.row][col] && !document.getElementById(`tile-${tile1.row}-${col}`).classList.contains('hidden')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
+                if (tile1.col === tile2.col) {
+                    // Check vertical path
+                    const minRow = Math.min(tile1.row, tile2.row);
+                    const maxRow = Math.max(tile1.row, tile2.row);
+                    
+                    // Check if path is clear
+                    for (let row = minRow + 1; row < maxRow; row++) {
+                        if (board[row][tile1.col] && !document.getElementById(`tile-${row}-${tile1.col}`).classList.contains('hidden')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
+                // Check for one corner (L-shaped) path
+                const corner1 = {row: tile1.row, col: tile2.col};
+                const corner2 = {row: tile2.row, col: tile1.col};
+                
+                // Check if corner1 path is clear
+                if (isCornerClear(tile1, corner1) && isCornerClear(corner1, tile2)) {
+                    return true;
+                }
+                
+                // Check if corner2 path is clear
+                if (isCornerClear(tile1, corner2) && isCornerClear(corner2, tile2)) {
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            // Check if corner path is clear
+            function isCornerClear(from, to) {
+                if (from.row === to.row) {
+                    // Horizontal path
+                    const minCol = Math.min(from.col, to.col);
+                    const maxCol = Math.max(from.col, to.col);
+                    
+                    for (let col = minCol + 1; col < maxCol; col++) {
+                        if (board[from.row][col] && !document.getElementById(`tile-${from.row}-${col}`).classList.contains('hidden')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
+                if (from.col === to.col) {
+                    // Vertical path
+                    const minRow = Math.min(from.row, to.row);
+                    const maxRow = Math.max(from.row, to.row);
+                    
+                    for (let row = minRow + 1; row < maxRow; row++) {
+                        if (board[row][from.col] && !document.getElementById(`tile-${row}-${from.col}`).classList.contains('hidden')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            // Update timer
+            function updateTimer() {
+                timeLeft--;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timeLeft = 0;
+                    showMessage('Time\'s up! Game over.');
+                    
+                    // Reset to level 1
+                    setTimeout(() => {
+                        level = 1;
+                        initGame();
+                    }, 2000);
+                }
+                
+                // Update timer display
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Update progress bar - time progress starts at 100% and decreases
+                let totalTime;
+                switch(level) {
+                    case 1: totalTime = 90; break;
+                    case 2: totalTime = 120; break;
+                    case 3: totalTime = 150; break;
+                    case 4: totalTime = 180; break;
+                    case 5: totalTime = 210; break;
+                    default: totalTime = 90;
+                }
+                
+                const progressPercentage = (timeLeft / totalTime) * 100;
+                timeProgressElement.style.width = `${progressPercentage}%`;
+            }
+            
+            // Show hint
+            function showHint() {
+                // Find all visible tiles
+                const visibleTiles = tiles.filter(tile => {
+                    const element = document.getElementById(tile.id);
+                    return !element.classList.contains('hidden');
+                });
+                
+                // Find matching pairs that can be connected
+                let hintPair = null;
+                
+                for (let i = 0; i < visibleTiles.length; i++) {
+                    for (let j = i + 1; j < visibleTiles.length; j++) {
+                        const tile1 = visibleTiles[i];
+                        const tile2 = visibleTiles[j];
+                        
+                        if (tile1.symbol === tile2.symbol && pathExists(tile1, tile2)) {
+                            hintPair = [tile1, tile2];
+                            break;
+                        }
+                    }
+                    if (hintPair) break;
+                }
+                
+                if (hintPair) {
+                    // Highlight hint tiles
+                    const [tile1, tile2] = hintPair;
+                    const element1 = document.getElementById(tile1.id);
+                    const element2 = document.getElementById(tile2.id);
+                    
+                    element1.style.backgroundColor = '#c0392b';
+                    element2.style.backgroundColor = '#c0392b';
+                    
+                    setTimeout(() => {
+                        element1.style.backgroundColor = '';
+                        element2.style.backgroundColor = '';
+                    }, 1000);
+                } else {
+                    // No valid moves, offer to shuffle
+                    showMessage('No valid moves available! Try shuffling the board.');
+                }
+            }
+            
+            // Shuffle tiles
+            function shuffleTiles() {
+                // Get all visible tiles
+                const visibleTiles = tiles.filter(tile => {
+                    const element = document.getElementById(tile.id);
+                    return !element.classList.contains('hidden');
+                });
+                
+                // Get symbols from visible tiles
+                const symbols = visibleTiles.map(tile => tile.symbol);
+                
+                // Shuffle symbols
+                const shuffledSymbols = [...symbols].sort(() => Math.random() - 0.5);
+                
+                // Assign new symbols to visible tiles
+                visibleTiles.forEach((tile, index) => {
+                    const element = document.getElementById(tile.id);
+                    element.textContent = shuffledSymbols[index];
+                    tile.symbol = shuffledSymbols[index];
+                });
+                
+                // Clear selection
+                if (selectedTile) {
+                    document.getElementById(selectedTile.id).classList.remove('selected');
+                    selectedTile = null;
+                }
+                
+                // Penalty: reduce time by 10 seconds
+                timeLeft = Math.max(0, timeLeft - 10);
+                updateTimer();
+                
+                showMessage('Board shuffled! -10 seconds penalty');
+            }
+            
+            // Show message
+            function showMessage(text) {
+                messageElement.textContent = text;
+                messageElement.style.display = 'block';
+                
+                setTimeout(() => {
+                    messageElement.style.display = 'none';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,18 +1,28 @@
-# Multi-Game Entertainment Website
+# ilovethisgame.cc - Free Online Games Platform
 
-This is an entertainment website that collects various puzzle games, referencing the design style of CrazyGames, using an iframe framework structure for easy future updates and game additions.
+## Project Overview
+ilovethisgame.cc is a platform offering various free online games, including card games, Sudoku, memory games, and more. All games can be played directly in your browser without downloading any applications.
 
 ## Website Structure
-
-- **Home Page**: Displays popular games, game category navigation, and search functionality
-- **Category Pages**: Shows games by category (Sudoku, Memory, Card Games, Mahjong, Fortune Telling, etc.)
-- **Game Detail Pages**: Loads specific game content using iframes
+- **Home Page**: Showcases popular games and recently added games
+- **Category Pages**:
+  - Card Games: Solitaire, Spider Solitaire, etc.
+  - Sudoku: Sudoku games of various difficulty levels
+  - Memory Games: Matching memory and other memory training games
+  - Mahjong: Classic Mahjong and modern variants
+  - Fortune Telling: Tarot cards and other divination games
 
 ## Technology Stack
+- HTML5
+- CSS3 (using Flexbox and Grid layouts)
+- JavaScript (vanilla, no frameworks)
+- Responsive design, suitable for all devices
 
-- HTML5 + CSS3: Building page structure and styles
-- Responsive Design: Adapting to different device sizes
-- iframe Framework: Loading game content
+## SEO Optimization
+- Semantic HTML structure
+- Structured data markup
+- XML sitemap
+- Meta tags optimized for search engines
 
 ## Directory Structure
 

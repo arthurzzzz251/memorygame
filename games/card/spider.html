@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HN64WQ5WSL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HN64WQ5WSL');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider Solitaire</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #236655;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .solitaire-game {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .game-area {
+            flex: 1;
+            position: relative;
+            padding: 20px;
+            overflow: auto;
+        }
+        
+        .top-area {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .foundation-piles {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .foundation, .stock, .waste {
+            width: 100px;
+            height: 140px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .stock-waste {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tableau {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tableau-pile {
+            width: 100px;
+            min-height: 140px;
+            position: relative;
+        }
+        
+        .card {
+            width: 100px;
+            height: 140px;
+            border-radius: 8px;
+            background-color: white;
+            color: black;
+            position: absolute;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+        
+        .card.red {
+            color: red;
+        }
+        
+        .card.face-down {
+            background: linear-gradient(135deg, #0575E6, #1C64EC);
+            color: transparent;
+        }
+        
+        .card-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        
+        .card-value {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        
+        .card-suit {
+            font-size: 2em;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card-value-bottom {
+            font-size: 1.2em;
+            line-height: 1;
+            align-self: flex-end;
+            transform: rotate(180deg);
+        }
+        
+        .controls {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #c0392b;
+        }
+        
+        #message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        @media (max-width: 900px) {
+            .card, .foundation, .stock, .waste {
+                width: 70px;
+                height: 98px;
+            }
+            
+            .tableau-pile {
+                width: 70px;
+            }
+            
+            .card-value {
+                font-size: 0.9em;
+            }
+            
+            .card-suit {
+                font-size: 1.5em;
+            }
+            
+            .card-value-bottom {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="solitaire-game">
+        <div class="header">
+            <div class="game-title">Spider Solitaire</div>
+            <div class="game-stats">
+                <div class="stat">
+                    <div>Time</div>
+                    <div id="time" class="stat-value">00:00</div>
+                </div>
+                <div class="stat">
+                    <div>Moves</div>
+                    <div id="moves" class="stat-value">0</div>
+                </div>
+                <div class="stat">
+                    <div>Score</div>
+                    <div id="score" class="stat-value">500</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div class="top-area">
+                <div class="stock-waste">
+                    <div class="stock" id="stock"></div>
+                </div>
+                <div class="foundation-piles">
+                    <div class="foundation" id="foundation-1"></div>
+                    <div class="foundation" id="foundation-2"></div>
+                    <div class="foundation" id="foundation-3"></div>
+                    <div class="foundation" id="foundation-4"></div>
+                    <div class="foundation" id="foundation-5"></div>
+                    <div class="foundation" id="foundation-6"></div>
+                    <div class="foundation" id="foundation-7"></div>
+                    <div class="foundation" id="foundation-8"></div>
+                </div>
+            </div>
+            
+            <div class="tableau">
+                <div class="tableau-pile" id="tableau-1"></div>
+                <div class="tableau-pile" id="tableau-2"></div>
+                <div class="tableau-pile" id="tableau-3"></div>
+                <div class="tableau-pile" id="tableau-4"></div>
+                <div class="tableau-pile" id="tableau-5"></div>
+                <div class="tableau-pile" id="tableau-6"></div>
+                <div class="tableau-pile" id="tableau-7"></div>
+                <div class="tableau-pile" id="tableau-8"></div>
+                <div class="tableau-pile" id="tableau-9"></div>
+                <div class="tableau-pile" id="tableau-10"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="new-game">New Game</button>
+            <button id="deal">Deal Cards</button>
+            <button id="undo">Undo</button>
+            <button id="hint">Hint</button>
+            <button id="difficulty">Difficulty: Medium</button>
+        </div>
+    </div>
+    
+    <div id="message"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert("Welcome to Spider Solitaire! This is a demo/placeholder. The full game implementation will be available soon.");
+            
+            // Game initialization placeholder
+            let difficulty = "medium"; // easy (1 suit), medium (2 suits), hard (4 suits)
+            let time = 0;
+            let moves = 0;
+            let score = 500;
+            
+            // Set up timer
+            let timer = setInterval(function() {
+                time++;
+                let minutes = Math.floor(time / 60);
+                let seconds = time % 60;
+                document.getElementById('time').textContent = 
+                    (minutes < 10 ? '0' : '') + minutes + ':' + 
+                    (seconds < 10 ? '0' : '') + seconds;
+            }, 1000);
+            
+            // Button event listeners
+            document.getElementById('new-game').addEventListener('click', function() {
+                if (confirm("Start a new game?")) {
+                    alert("New game will be started!");
+                    // Reset game state
+                    time = 0;
+                    moves = 0;
+                    score = 500;
+                    document.getElementById('moves').textContent = moves;
+                    document.getElementById('score').textContent = score;
+                }
+            });
+            
+            document.getElementById('deal').addEventListener('click', function() {
+                alert("Dealing new cards...");
+                // Deal logic would go here
+            });
+            
+            document.getElementById('undo').addEventListener('click', function() {
+                alert("Undo last move");
+                // Undo logic would go here
+            });
+            
+            document.getElementById('hint').addEventListener('click', function() {
+                alert("Here's a hint: Try to create sequences of same suit cards.");
+                // Hint logic would go here
+            });
+            
+            document.getElementById('difficulty').addEventListener('click', function() {
+                if (difficulty === "easy") {
+                    difficulty = "medium";
+                    this.textContent = "Difficulty: Medium";
+                } else if (difficulty === "medium") {
+                    difficulty = "hard";
+                    this.textContent = "Difficulty: Hard";
+                } else {
+                    difficulty = "easy";
+                    this.textContent = "Difficulty: Easy";
+                }
+                alert("Changed difficulty to " + difficulty);
+            });
+        });
+    </script>
+</body>
+</html> 

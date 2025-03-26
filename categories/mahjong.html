@@ -13,8 +13,17 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahjong Games - GameZone</title>
-    <meta name="description" content="Play free online Mahjong games. Connect matching tiles, clear the board, and challenge your observation skills with our collection of Mahjong games.">
+    <title>Mahjong Games - GameZone | ilovethisgame.cc</title>
+    <meta name="description" content="Play free Mahjong games online. Classic Mahjong solitaire, Mahjong connect, and other variants to challenge your matching skills.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ilovethisgame.cc/categories/mahjong.html">
+    <meta property="og:title" content="Mahjong Games - GameZone | ilovethisgame.cc">
+    <meta property="og:description" content="Play free Mahjong games online. Classic Mahjong solitaire, Mahjong connect, and other variants to challenge your matching skills.">
+    <meta property="og:url" content="https://ilovethisgame.cc/categories/mahjong.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ilovethisgame.cc/assets/images/mahjong-connect.jpg">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
@@ -168,45 +177,72 @@
     </header>
     
     <!-- Main Content -->
-    <main>
+    <main itemscope itemtype="http://schema.org/CollectionPage">
         <div class="container">
             <!-- Hero Section -->
             <section class="hero">
-                <h1>Mahjong Games</h1>
-                <p>Connect matching tiles and test your observation skills with our Mahjong games</p>
+                <h1 itemprop="name">Mahjong Games</h1>
+                <p itemprop="description">Enjoy classic Mahjong games and exciting new variants</p>
             </section>
             
             <!-- Mahjong Games Section -->
             <section class="featured-games">
                 <h2 class="section-title">Popular Mahjong Games</h2>
-                <div class="game-grid">
+                <div class="game-grid" itemscope itemtype="http://schema.org/ItemList">
+                    <meta itemprop="itemListOrder" content="Unordered" />
                     <!-- Dark Mahjong Connect -->
-                    <div class="game-card" data-tags="mahjong,connect,dark">
+                    <div class="game-card" data-tags="mahjong,connect,dark" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="1" />
                         <div class="game-thumb" style="background-image: url('../assets/images/dark-mahjong-connect.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Dark Mahjong Connect</div>
+                            <div class="game-title" itemprop="name">Dark Mahjong Connect</div>
+                            <meta itemprop="description" content="A challenging Mahjong game with dark theme and connect-style gameplay." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/mahjong/dark-connect.html', 'Dark Mahjong Connect')">Play</a>
+                        <a href="../games/mahjong/dark-connect.html" class="play-now" itemprop="url" title="Play Dark Mahjong Connect">Play</a>
                     </div>
                     
                     <!-- Mahjong Connect -->
-                    <div class="game-card" data-tags="mahjong,connect">
+                    <div class="game-card" data-tags="mahjong,connect" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="2" />
                         <div class="game-thumb" style="background-image: url('../assets/images/mahjong-connect.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Mahjong Connect</div>
+                            <div class="game-title" itemprop="name">Mahjong Connect</div>
+                            <meta itemprop="description" content="Link matching tiles with a line of no more than 3 turns to clear the board." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/mahjong/connect.html', 'Mahjong Connect')">Play</a>
+                        <a href="../games/mahjong/connect.html" class="play-now" itemprop="url" title="Play Mahjong Connect">Play</a>
                     </div>
                     
-                    <!-- Dynasty Mahjong -->
-                    <div class="game-card" data-tags="mahjong,dynasty">
+                    <!-- Mahjong Dynasty -->
+                    <div class="game-card" data-tags="mahjong,dynasty" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="3" />
                         <div class="game-thumb" style="background-image: url('../assets/images/mahjong-dynasty.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Dynasty Mahjong</div>
+                            <div class="game-title" itemprop="name">Dynasty Mahjong</div>
+                            <meta itemprop="description" content="A traditional Mahjong solitaire game with a Chinese dynasty theme." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/mahjong/dynasty.html', 'Dynasty Mahjong')">Play</a>
+                        <a href="../games/mahjong/dynasty.html" class="play-now" itemprop="url" title="Play Dynasty Mahjong">Play</a>
+                    </div>
+                    
+                    <!-- Classic Mahjong -->
+                    <div class="game-card" data-tags="mahjong,classic" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="4" />
+                        <div class="game-thumb" style="background-image: url('../assets/images/mahjong-classic.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title" itemprop="name">Classic Mahjong</div>
+                            <meta itemprop="description" content="The traditional Mahjong solitaire tile matching game." />
+                        </div>
+                        <a href="../games/mahjong/classic.html" class="play-now" itemprop="url" title="Play Classic Mahjong">Play</a>
                     </div>
                 </div>
+            </section>
+            
+            <!-- Additional content for SEO -->
+            <section class="mahjong-info">
+                <h2>About Mahjong Games</h2>
+                <p>Mahjong is one of the world's most popular tile-based games, originating in China during the Qing dynasty. Traditional Mahjong is a game of skill, strategy, and calculation, typically played by four players. However, the digital versions we offer are primarily solitaire variants that can be enjoyed by a single player.</p>
+                <p>The most common online version is Mahjong solitaire (sometimes called Shanghai), where players need to match identical pairs of exposed tiles to remove them from the board. The challenge comes from the stacking pattern, as you can only select tiles that are not covered by others and have at least one side open.</p>
+                <p>We also offer exciting variants like Mahjong Connect, where you need to find matching tiles that can be connected by a line with no more than three turns. This adds a new strategic element to the classic matching gameplay.</p>
+                <p>Our Mahjong games feature beautiful tile designs, various layouts, and difficulty levels suitable for both beginners and experienced players. Whether you enjoy the classic experience or prefer a new twist on the traditional format, our collection has something for everyone.</p>
             </section>
         </div>
     </main>
@@ -252,5 +288,20 @@
     
     <!-- JavaScript -->
     <script src="../js/main.js"></script>
+    <script>
+    // Convert onclick handlers to direct links
+    document.addEventListener('DOMContentLoaded', function() {
+        const playButtons = document.querySelectorAll('.play-now');
+        playButtons.forEach(button => {
+            if (button.getAttribute('onclick')) {
+                const url = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const title = button.getAttribute('onclick').match(/, '([^']+)'/)[1];
+                button.removeAttribute('onclick');
+                button.setAttribute('href', url);
+                button.setAttribute('title', 'Play ' + title);
+            }
+        });
+    });
+    </script>
 </body>
 </html> 

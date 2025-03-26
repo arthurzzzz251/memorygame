@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HN64WQ5WSL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HN64WQ5WSL');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zodiac Compatibility</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #4a69bd);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .game-title {
+            font-size: 2em;
+            margin: 0;
+            font-weight: bold;
+        }
+        
+        .zodiac-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .zodiac-selection {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .selection-container {
+            text-align: center;
+        }
+        
+        .selection-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 400px;
+        }
+        
+        .zodiac-sign {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .zodiac-sign:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .zodiac-sign.active {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .zodiac-icon {
+            font-size: 2em;
+        }
+        
+        .result-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+            max-width: 700px;
+            display: none;
+        }
+        
+        .compatibility-meter {
+            width: 100%;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .compatibility-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            width: 0;
+            transition: width 1s ease-in-out;
+            border-radius: 10px;
+        }
+        
+        .compatibility-score {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .compatibility-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .calculate-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 768px) {
+            .zodiac-selection {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .zodiac-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .zodiac-sign {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="game-title">Zodiac Compatibility</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="zodiac-container">
+            <div class="zodiac-selection">
+                <div class="selection-container">
+                    <h2 class="selection-title">Select Your Sign</h2>
+                    <div class="zodiac-grid" id="your-signs">
+                        <div class="zodiac-sign" data-sign="aries">
+                            <span class="zodiac-icon">♈</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="taurus">
+                            <span class="zodiac-icon">♉</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="gemini">
+                            <span class="zodiac-icon">♊</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="cancer">
+                            <span class="zodiac-icon">♋</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="leo">
+                            <span class="zodiac-icon">♌</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="virgo">
+                            <span class="zodiac-icon">♍</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="libra">
+                            <span class="zodiac-icon">♎</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="scorpio">
+                            <span class="zodiac-icon">♏</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="sagittarius">
+                            <span class="zodiac-icon">♐</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="capricorn">
+                            <span class="zodiac-icon">♑</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="aquarius">
+                            <span class="zodiac-icon">♒</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="pisces">
+                            <span class="zodiac-icon">♓</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="selection-container">
+                    <h2 class="selection-title">Select Partner's Sign</h2>
+                    <div class="zodiac-grid" id="partner-signs">
+                        <div class="zodiac-sign" data-sign="aries">
+                            <span class="zodiac-icon">♈</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="taurus">
+                            <span class="zodiac-icon">♉</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="gemini">
+                            <span class="zodiac-icon">♊</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="cancer">
+                            <span class="zodiac-icon">♋</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="leo">
+                            <span class="zodiac-icon">♌</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="virgo">
+                            <span class="zodiac-icon">♍</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="libra">
+                            <span class="zodiac-icon">♎</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="scorpio">
+                            <span class="zodiac-icon">♏</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="sagittarius">
+                            <span class="zodiac-icon">♐</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="capricorn">
+                            <span class="zodiac-icon">♑</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="aquarius">
+                            <span class="zodiac-icon">♒</span>
+                        </div>
+                        <div class="zodiac-sign" data-sign="pisces">
+                            <span class="zodiac-icon">♓</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="calculate-btn" id="calculate-btn" disabled>Calculate Compatibility</button>
+            
+            <div class="result-section" id="result-section">
+                <h2>Compatibility Result</h2>
+                <div class="compatibility-score" id="compatibility-score">85%</div>
+                <div class="compatibility-meter">
+                    <div class="compatibility-fill" id="compatibility-fill"></div>
+                </div>
+                <div class="compatibility-text" id="compatibility-text">
+                    <!-- Compatibility description will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert("Welcome to Zodiac Compatibility! This is a demo/placeholder. A full implementation will be available soon.");
+            
+            let yourSign = null;
+            let partnerSign = null;
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultSection = document.getElementById('result-section');
+            
+            // Handle zodiac sign selection for your sign
+            const yourSigns = document.querySelectorAll('#your-signs .zodiac-sign');
+            yourSigns.forEach(sign => {
+                sign.addEventListener('click', function() {
+                    // Clear previous selection
+                    yourSigns.forEach(s => s.classList.remove('active'));
+                    // Set new selection
+                    this.classList.add('active');
+                    yourSign = this.dataset.sign;
+                    updateCalculateButton();
+                });
+            });
+            
+            // Handle zodiac sign selection for partner's sign
+            const partnerSigns = document.querySelectorAll('#partner-signs .zodiac-sign');
+            partnerSigns.forEach(sign => {
+                sign.addEventListener('click', function() {
+                    // Clear previous selection
+                    partnerSigns.forEach(s => s.classList.remove('active'));
+                    // Set new selection
+                    this.classList.add('active');
+                    partnerSign = this.dataset.sign;
+                    updateCalculateButton();
+                });
+            });
+            
+            // Enable/disable calculate button based on selections
+            function updateCalculateButton() {
+                calculateBtn.disabled = !(yourSign && partnerSign);
+            }
+            
+            // Handle calculate button click
+            calculateBtn.addEventListener('click', function() {
+                // In a real implementation, this would calculate actual compatibility
+                // Here we'll just generate random results for the demo
+                calculateCompatibility(yourSign, partnerSign);
+            });
+            
+            // Calculate compatibility between two signs (demo)
+            function calculateCompatibility(sign1, sign2) {
+                // For demo purposes, generate a random score
+                const score = Math.floor(Math.random() * 40) + 60; // Between 60-99
+                
+                // Display the result
+                document.getElementById('compatibility-score').textContent = score + '%';
+                document.getElementById('compatibility-fill').style.width = score + '%';
+                
+                // Generate some sample text based on the score
+                let text = '';
+                if (score >= 90) {
+                    text = `${capitalize(sign1)} and ${capitalize(sign2)} have amazing compatibility! Your elements work harmoniously together, creating a balanced and fulfilling relationship. You understand each other's needs and can communicate effectively even during challenging times. This is a relationship with great potential for long-term happiness.`;
+                } else if (score >= 80) {
+                    text = `${capitalize(sign1)} and ${capitalize(sign2)} have very good compatibility. You share many values and interests, which helps you build a strong foundation. While you may face occasional challenges, your natural connection allows you to overcome them with understanding and patience.`;
+                } else if (score >= 70) {
+                    text = `${capitalize(sign1)} and ${capitalize(sign2)} have good compatibility. You have different strengths that can complement each other well. With effort and communication, you can build a balanced relationship. Be mindful of your different approaches to situations, as this can sometimes create misunderstandings.`;
+                } else {
+                    text = `${capitalize(sign1)} and ${capitalize(sign2)} have moderate compatibility. Your different perspectives and approaches to life can create both interest and challenges in your relationship. With patience and understanding, you can learn from each other and grow together. Focus on communication to bridge your natural differences.`;
+                }
+                
+                document.getElementById('compatibility-text').innerHTML = text;
+                resultSection.style.display = 'block';
+                
+                // Scroll to results
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Helper function to capitalize first letter
+            function capitalize(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        });
+    </script>
+</body>
+</html> 

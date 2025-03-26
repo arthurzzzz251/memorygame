@@ -13,8 +13,15 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Games - GameZone</title>
+    <title>Card Games - GameZone | ilovethisgame.cc</title>
     <meta name="description" content="Play free online card games including Solitaire, Spider Solitaire, and more classic card games. No downloads required, enjoy directly in your browser.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ilovethisgame.cc/categories/cards.html">
+    <meta property="og:title" content="Free Online Card Games - ilovethisgame.cc">
+    <meta property="og:description" content="Play free online card games including Solitaire, Spider Solitaire, and more. No downloads required.">
+    <meta property="og:url" content="https://ilovethisgame.cc/categories/cards.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ilovethisgame.cc/assets/images/solitaire.jpg">
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
@@ -179,25 +186,48 @@
             <!-- Card Games Section -->
             <section class="featured-games">
                 <h2 class="section-title">Popular Card Games</h2>
-                <div class="game-grid">
+                <div class="game-grid" itemscope itemtype="http://schema.org/ItemList">
                     <!-- Solitaire -->
-                    <div class="game-card" data-tags="cards,solitaire">
+                    <div class="game-card" data-tags="cards,solitaire" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="1" />
                         <div class="game-thumb" style="background-image: url('../assets/images/solitaire.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Solitaire</div>
+                            <div class="game-title" itemprop="name">Solitaire</div>
+                            <meta itemprop="description" content="A classic single-player card game that tests strategy and patience." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/card/solitaire.html', 'Solitaire')">Play</a>
+                        <a href="../games/card/solitaire.html" class="play-now" itemprop="url">Play Now</a>
                     </div>
                     
                     <!-- Spider Solitaire -->
-                    <div class="game-card" data-tags="cards,spider">
+                    <div class="game-card" data-tags="cards,spider" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="2" />
                         <div class="game-thumb" style="background-image: url('../assets/images/spider-solitaire.jpg');"></div>
                         <div class="game-info">
-                            <div class="game-title">Spider Solitaire</div>
+                            <div class="game-title" itemprop="name">Spider Solitaire</div>
+                            <meta itemprop="description" content="A more challenging variant of solitaire using multiple decks." />
                         </div>
-                        <a href="javascript:void(0)" class="play-now" onclick="loadGame('../games/card/spider.html', 'Spider Solitaire')">Play</a>
+                        <a href="../games/card/spider.html" class="play-now" itemprop="url">Play Now</a>
+                    </div>
+
+                    <!-- Add more games -->
+                    <div class="game-card" data-tags="cards,poker" itemprop="itemListElement" itemscope itemtype="http://schema.org/Game">
+                        <meta itemprop="position" content="3" />
+                        <div class="game-thumb" style="background-image: url('../assets/images/poker.jpg');"></div>
+                        <div class="game-info">
+                            <div class="game-title" itemprop="name">Poker</div>
+                            <meta itemprop="description" content="A classic multiplayer card game that tests strategy and psychological skills." />
+                        </div>
+                        <a href="../games/card/poker.html" class="play-now" itemprop="url">Play Now</a>
                     </div>
                 </div>
+            </section>
+
+            <!-- Add page content -->
+            <section class="game-info-section">
+                <h2>About Card Games</h2>
+                <p>Card games are among the most popular game types in the world, with a long history and rich variety. At ilovethisgame.cc, we've carefully selected the most popular card games, including Solitaire, Spider Solitaire, and Poker.</p>
+                <p>These classic games are easy to learn but difficult to master, and can improve your strategic thinking and concentration. Whether you're a beginner or an expert in card games, you'll find a suitable gaming experience on our platform.</p>
+                <p>All games can be played directly in your browser without downloading any applications. We also provide detailed game rules and tips to help you improve your gaming skills.</p>
             </section>
         </div>
     </main>
@@ -243,5 +273,21 @@
     
     <!-- JavaScript -->
     <script src="../js/main.js"></script>
+    <script>
+    // Modify the original loadGame function, replace with direct links
+    document.addEventListener('DOMContentLoaded', function() {
+        // Replace all links using onclick="loadGame(...)" with direct links
+        const playButtons = document.querySelectorAll('.play-now');
+        playButtons.forEach(button => {
+            if (button.getAttribute('onclick')) {
+                const url = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const title = button.getAttribute('onclick').match(/, '([^']+)'/)[1];
+                button.removeAttribute('onclick');
+                button.setAttribute('href', url);
+                button.setAttribute('title', 'Play ' + title);
+            }
+        });
+    });
+    </script>
 </body>
 </html> 
